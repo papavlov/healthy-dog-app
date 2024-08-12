@@ -44,4 +44,11 @@ public class ApplicationController {
 
         return "registration_successful";
     }
+
+    @GetMapping("/add_dog")
+    public String addDog(Model model) {
+        model.addAttribute("dog", new Dog());
+
+        return "add_dog";
+    }
 }
