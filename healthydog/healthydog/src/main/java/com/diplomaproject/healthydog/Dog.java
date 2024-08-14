@@ -3,7 +3,7 @@ package com.diplomaproject.healthydog;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="dogs")
+@Table(name = "dogs")
 public class Dog {
 
     @Id
