@@ -10,6 +10,8 @@ public class HealthydogApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(HealthydogApplication.class, args);
 
+
+
 	}
 
 }

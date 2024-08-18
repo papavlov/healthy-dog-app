@@ -1,41 +1,52 @@
 package com.diplomaproject.healthydog;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "breeds_data")
+
 public class BreedsDataEntity {
 
-    @Column(name = "breed_id")
     @Id
-    private Integer breed_id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "breed_id")
+    private Long breedId;
 
     @Column(name = "breed_name")
-    private String breed_name;
+    private String breedName;
 
-    public BreedsDataEntity(Integer breed_id, String breed_name) {
+    // Constructors
+    public BreedsDataEntity() {}
+
+    public BreedsDataEntity(Long breedId, String breedName) {
+        this.breedId = breedId;
+        this.breedName = breedName;
     }
 
-    public BreedsDataEntity() {
-
+    // Getters and Setters
+    public Long getId() {
+        return id;
     }
 
-    public Integer getBreedId() {
-        return breed_id;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setBreedId(Integer breed_id) {
-        this.breed_id = breed_id;
+    public Long getBreedId() {
+        return breedId;
+    }
+
+    public void setBreedId(Long breedId) {
+        this.breedId = breedId;
     }
 
     public String getBreedName() {
-        return breed_name;
+        return breedName;
     }
 
-    public void setBreedName(String breed_name) {
-        this.breed_name = breed_name;
+    public void setBreedName(String breedName) {
+        this.breedName = breedName;
     }
 }
