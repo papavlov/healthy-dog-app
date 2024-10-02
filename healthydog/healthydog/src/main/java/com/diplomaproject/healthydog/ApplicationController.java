@@ -44,11 +44,21 @@ public class ApplicationController {
 
         return "registration_successful";
     }
-
+    @GetMapping("/home_page")
+    public String homePage() {
+        return "home_page"; // Assuming you have "home_page.html" in your templates folder
+    }
     @GetMapping("/add_dog")
     public String addDog(Model model) {
         model.addAttribute("dog", new Dog());
 
         return "add_dog";
+    }
+
+    @GetMapping("/see_your_dogs")
+    public String seeYourDogs(Model model) {
+        // Retrieve dog information from the database
+        //model.addAttribute("dogs", dogService.findAllDogs()); // Example service method
+        return "see_your_dogs"; // The name of the view (Thymeleaf template)
     }
 }

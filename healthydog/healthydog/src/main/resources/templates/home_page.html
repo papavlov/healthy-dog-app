@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to the Healthy Dog app!</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container text-center">
+    <h1>Welcome to the Healthy Dog app!</h1>
+
+    <h3><a th:href="@{add_dog}">Add a dog</a></h3>
+    <h3><a th:href="@{see_your_dogs}">See your dogs</a></h3>
+</div>
+</body>
+</html>
