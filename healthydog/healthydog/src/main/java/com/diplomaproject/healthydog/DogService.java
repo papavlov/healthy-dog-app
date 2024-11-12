@@ -9,6 +9,13 @@ import java.util.Optional;
 @Service
 public class DogService {
 
+    @Autowired
+    private DogRepository dogRepository;
+
+    public Dog addDog(Dog dog) {
+        return dogRepository.save(dog);
+    }
+    /*
     private final DogRepository dogRepository;
 
     @Autowired
@@ -45,4 +52,6 @@ public class DogService {
     public void deleteDog(Long id) {
         dogRepository.deleteById(id);
     }
+    */
+
 }

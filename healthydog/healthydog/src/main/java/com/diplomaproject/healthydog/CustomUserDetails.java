@@ -1,9 +1,11 @@
 package com.diplomaproject.healthydog;
 
 import java.util.Collection;
+import java.util.Collections;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 public class CustomUserDetails implements UserDetails {
 
@@ -15,8 +17,11 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        //return Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
+        //return null
+        return Collections.emptyList();  // No roles, just empty list
     }
+
 
     @Override
     public String getPassword() {
