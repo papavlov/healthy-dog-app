@@ -10,8 +10,8 @@ public class Dog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "dog_name", nullable = false)
-    private String dogName;
+    @Column(name = "name", nullable = false)
+    private String name;
 
     @Column(name = "breed", nullable = false)
     private String breed;
@@ -22,6 +22,18 @@ public class Dog {
     @Column(name = "weight", nullable = false)
     private Float weight;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id") // This is the foreign key column
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public Long getId() {
         return id;
     }
@@ -30,12 +42,12 @@ public class Dog {
         this.id = id;
     }
 
-    public String getDogName() {
-        return dogName;
+    public String getName() {
+        return name;
     }
 
-    public void setDogName(String dogName) {
-        this.dogName = dogName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getBreed() {

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dog List</title>
+</head>
+<body>
+<h1>Dog List</h1>
+<div>
+    <a href="/add-dog-form">Add New Dog</a>
+</div>
+
+<div>
+    <h2>Your Dogs</h2>
+    <ul>
+        <li th:each="dog : ${dogs}">
+            <span th:text="${dog.dogName}">Dog Name</span> -
+            <span th:text="${dog.breed}">Breed</span> -
+            <span th:text="${dog.age}">Age</span>
+        </li>
+    </ul>
+</div>
+</body>
+</html>
