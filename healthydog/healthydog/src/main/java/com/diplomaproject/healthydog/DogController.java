@@ -18,6 +18,9 @@ public class DogController {
     @Autowired
     private DogService dogService;
 
+    @Autowired
+    private VaccineService vaccineService;
+
     // Display the Add Dog form
     @GetMapping("/add_dog")
     public String addDog(Model model, Authentication authentication) {
@@ -56,16 +59,30 @@ public class DogController {
         if (authentication == null || !authentication.isAuthenticated()) {
             return "redirect:/login"; // Redirect if not authenticated
         }
+
         String username = authentication.getName(); // Get logged-in user's username
         User user = userService.findByEmail(username); // Fetch user by email
+
         if (user == null) {
             model.addAttribute("error", "User not found. Please log in again.");
             return "login"; // Redirect to login page with error
         }
-        List<Dog> dogs = dogService.findByUser(user); // Get dogs for the user
-        model.addAttribute("dogs", dogs); // Add the list of dogs to the model
+
+        // Fetch the list of dogs for the user
+        List<Dog> dogs = dogService.findByUser(user);
+
+        // Fetch vaccines for each dog and add them to the dog's object
+        for (Dog dog : dogs) {
+            List<Vaccine> vaccines = vaccineService.getVaccinesForDog(dog.getId()); // Retrieve vaccines for the dog
+            dog.setVaccines(vaccines); // Set vaccines in the dog object
+        }
+
+        // Add the list of dogs (with vaccines) to the model
+        model.addAttribute("dogs", dogs);
+
         return "dog_list"; // Return the dog_list.html view
     }
+
 
     // Show details for a specific dog
     @GetMapping("/{id}")

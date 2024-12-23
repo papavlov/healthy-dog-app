@@ -1,6 +1,8 @@
 package com.diplomaproject.healthydog;
 
 import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "dogs")
@@ -25,6 +27,12 @@ public class Dog {
     @ManyToOne
     @JoinColumn(name = "user_id") // This is the foreign key column
     private User user;
+
+    // One-to-many relationship with the Vaccine entity
+    @OneToMany(mappedBy = "dog", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Vaccine> vaccines = new ArrayList<>();
+
+    // Getters and setters
 
     public User getUser() {
         return user;
@@ -72,5 +80,25 @@ public class Dog {
 
     public void setWeight(Float weight) {
         this.weight = weight;
+    }
+
+    // Getters and setters for vaccines
+
+    public List<Vaccine> getVaccines() {
+        return vaccines;
+    }
+
+    public void setVaccines(List<Vaccine> vaccines) {
+        this.vaccines = vaccines;
+    }
+
+    public void addVaccine(Vaccine vaccine) {
+        vaccines.add(vaccine);
+        vaccine.setDog(this);  // Set the dog's reference in the vaccine
+    }
+
+    public void removeVaccine(Vaccine vaccine) {
+        vaccines.remove(vaccine);
+        vaccine.setDog(null);  // Remove the dog's reference in the vaccine
     }
 }

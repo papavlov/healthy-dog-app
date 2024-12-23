@@ -18,8 +18,8 @@ public class DogService {
     }
 
     // Find a dog by its ID
-    public Dog findById(Long id) {
-        return dogRepository.findById(id).orElse(null); // or handle exception
+    public Dog findById(Long dogId) {
+        return dogRepository.findById(dogId).orElseThrow(() -> new RuntimeException("Dog not found"));
     }
 
     // Add a dog directly using the Dog entity

@@ -15,7 +15,17 @@
         <li th:each="dog : ${dogs}">
             <span th:text="${dog.name}">Dog Name</span> -
             <span th:text="${dog.breed}">Breed</span> -
-            <span th:text="${dog.age}">Age</span>
+            <span th:text="${dog.age}">Age</span> -
+            <span th:text="${dog.weight}">Weight</span> -
+
+            <!-- Log Vaccines Link -->
+            <a th:href="@{/dogs/{dogId}/vaccines/add(dogId=${dog.id})}"
+               th:text="'Log Vaccines for ' + ${dog.name}">Log Vaccines</a>
+
+
+            <!-- See All Vaccines Link -->
+            <a th:href="@{/dogs/{dogId}/vaccines/view(dogId=${dog.id})}"
+               th:text="'See all vaccines for ' + ${dog.name}">See all vaccines</a>
         </li>
     </ul>
 </div>

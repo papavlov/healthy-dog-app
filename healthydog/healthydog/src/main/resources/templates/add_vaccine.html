@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log Vaccine for Dog</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h2>Log Vaccine for Your Dog</h2>
+    <form id="vaccineForm" method="POST" th:action="@{/dogs/{dogId}/vaccines(dogId=${dog.id})}">
+        <input type="hidden" name="dogId" th:value="${dog.id}">
+
+        <div class="mb-3">
+            <label class="form-label">Dog</label>
+            <input type="text" class="form-control" th:value="${dog.name + ' (' + dog.breed + ')'}" readonly>
+        </div>
+
+        <div class="mb-3">
+            <label for="vaccineName" class="form-label">Vaccine Name</label>
+            <input type="text" class="form-control" id="vaccineName" name="vaccineName" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="vaccinationDate" class="form-label">Vaccination Date</label>
+            <input type="date" class="form-control" id="vaccinationDate" name="vaccinationDate" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit Vaccine</button>
+    </form>
+
+</div>
+</body>
+</html>

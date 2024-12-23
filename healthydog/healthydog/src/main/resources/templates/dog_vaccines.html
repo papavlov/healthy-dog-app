@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Vaccines for [[${dog.name}]]</title>
+</head>
+<body>
+<h1>Vaccines for [[${dog.name}]]</h1>
+
+<div>
+    <h2>Vaccines</h2>
+    <ul>
+        <li th:each="vaccine : ${vaccines}">
+            <span th:text="${vaccine.vaccineName}">Vaccine Name</span> -
+            <span th:text="${vaccine.vaccinationDate}">Vaccine Date</span>
+        </li>
+    </ul>
+    <a href="/dogs/list">Back to Dog List</a> <!-- Link to return to the dog list -->
+</div>
+
+</body>
+</html>
