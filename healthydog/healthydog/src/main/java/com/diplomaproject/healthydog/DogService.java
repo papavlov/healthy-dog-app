@@ -12,6 +12,13 @@ public class DogService {
     @Autowired
     private UserRepository userRepository;  // Assuming you have a User repository
 
+    @Autowired
+    private BreedsRepository breedsRepository;
+
+    public List<BreedsDataEntity> getAllBreeds() {
+        return breedsRepository.findAll();
+    }
+
     // Find dogs by user
     public List<Dog> findByUser(User user) {
         return dogRepository.findByUser(user);

@@ -21,12 +21,18 @@ public class DogController {
     @Autowired
     private VaccineService vaccineService;
 
+    @Autowired
+    private BreedsRepository breedsRepository; // Add the BreedsDataRepository to fetch breeds
+
     // Display the Add Dog form
     @GetMapping("/add_dog")
     public String addDog(Model model, Authentication authentication) {
         if (authentication == null || !authentication.isAuthenticated()) {
             return "redirect:/login"; // Redirect if not authenticated
         }
+
+        List<BreedsDataEntity> breeds = breedsRepository.findAll(); // Fetch all breeds
+        model.addAttribute("breeds", breeds); // Add breeds to the model
         model.addAttribute("dog", new Dog()); // Add empty Dog object for form binding
         return "add_dog"; // Return the add_dog.html view
     }
@@ -82,7 +88,6 @@ public class DogController {
 
         return "dog_list"; // Return the dog_list.html view
     }
-
 
     // Show details for a specific dog
     @GetMapping("/{id}")

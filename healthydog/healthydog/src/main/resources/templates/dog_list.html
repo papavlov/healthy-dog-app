@@ -14,7 +14,7 @@
     <ul>
         <li th:each="dog : ${dogs}">
             <span th:text="${dog.name}">Dog Name</span> -
-            <span th:text="${dog.breed}">Breed</span> -
+            <span th:text="${dog.breed != null ? dog.breed.breedName : 'Unknown breed'}">Breed</span> - <!-- Display breed name --> -
             <span th:text="${dog.age}">Age</span> -
             <span th:text="${dog.weight}">Weight</span> -
 

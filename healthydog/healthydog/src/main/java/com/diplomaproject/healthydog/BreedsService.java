@@ -26,7 +26,7 @@ public class BreedsService {
             while ((nextLine = reader.readNext()) != null) {
                 Long breedId = Long.parseLong(nextLine[0]);
                 String breedName = nextLine[1];
-                dogBreeds.add(new BreedsDataEntity(breedId, breedName));
+                dogBreeds.add(new BreedsDataEntity(breedName));
             }
 
             dogBreedRepository.saveAll(dogBreeds);

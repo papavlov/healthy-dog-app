@@ -24,9 +24,10 @@
     <input type="text" id="name" th:field="*{name}" required />
     <br>
 
-    <!-- Breed -->
-    <label for="breed">Breed:</label>
-    <input type="text" id="breed" th:field="*{breed}" required />
+    <label for="breed">Breed</label>
+    <select th:field="*{breed}" id="breed">
+        <option th:each="breed : ${breeds}" th:value="${breed.id}" th:text="${breed.breedName}"></option>
+    </select>
     <br>
 
     <!-- Age -->

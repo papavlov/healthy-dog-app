@@ -15,8 +15,10 @@ public class Dog {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "breed", nullable = false)
-    private String breed;
+    @ManyToOne
+    @JoinColumn(name = "breed_id") // This should match the foreign key column in the Dog table
+    private BreedsDataEntity breed;
+
 
     @Column(name = "age", nullable = false)
     private Integer age;
@@ -58,11 +60,11 @@ public class Dog {
         this.name = name;
     }
 
-    public String getBreed() {
+    public BreedsDataEntity getBreed() {
         return breed;
     }
 
-    public void setBreed(String breed) {
+    public void setBreed(BreedsDataEntity breed) {
         this.breed = breed;
     }
 
