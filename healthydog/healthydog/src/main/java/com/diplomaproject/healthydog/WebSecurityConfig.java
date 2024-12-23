@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 public class WebSecurityConfig   {
@@ -34,44 +35,30 @@ public class WebSecurityConfig   {
         return authProvider;
     }
 
-    /*
-    @Bean
-    SecurityFilterChain configure(HttpSecurity http) throws Exception {
-
-        http.authenticationProvider(authenticationProvider());
-
-        http.authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/users").authenticated()
-                                .anyRequest().permitAll()
-                )
-                .formLogin(login ->
-                        login.usernameParameter("email")
-                                .defaultSuccessUrl("/home_page")
-                                .permitAll()
-                )
-                .logout(logout -> logout.logoutSuccessUrl("/").permitAll()
-                );
-
-        return http.build();
-    }*/
-
-
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http.authenticationProvider(authenticationProvider())
-                .authorizeRequests()
-                .requestMatchers("/add_dog", "/add_dog-form").authenticated()  // Protect add dog routes
-                .anyRequest().permitAll()  // Allow other pages to be publicly accessible
+                .authorizeHttpRequests()
+                .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
+                .requestMatchers("/dogs/add_dog", "/dogs/add_dog-form").authenticated()
+                .anyRequest().permitAll()
+                .and()
+                .csrf()  // Ensure CSRF is enabled for safety
                 .and()
                 .formLogin()
-                .usernameParameter("email") // Use email as the username
-                .defaultSuccessUrl("/home_page", true) // Redirect to home page after successful login
+                .usernameParameter("email")
+                .defaultSuccessUrl("/home_page", true)
                 .permitAll()
                 .and()
                 .logout()
-                .logoutSuccessUrl("/").permitAll(); // Redirect to home page after logout
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/")
+                .permitAll();
 
         return http.build();
     }
+
+
+
 
 }

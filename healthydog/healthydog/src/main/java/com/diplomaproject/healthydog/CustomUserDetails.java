@@ -17,10 +17,10 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        //return Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
-        //return null
-        return Collections.emptyList();  // No roles, just empty list
+        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
     }
+
+
 
 
     @Override
