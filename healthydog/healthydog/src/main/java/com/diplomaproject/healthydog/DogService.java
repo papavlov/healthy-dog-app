@@ -15,6 +15,9 @@ public class DogService {
     @Autowired
     private BreedsRepository breedsRepository;
 
+    @Autowired
+    private BreedSizeRepository breedSizeRepository;
+
     public List<BreedsDataEntity> getAllBreeds() {
         return breedsRepository.findAll();
     }
@@ -36,6 +39,10 @@ public class DogService {
     }
 
     public void saveDog(Dog dog) {
-        dogRepository.save(dog);
+        if (dog.getBreedSize() != null) {
+            breedSizeRepository.save(dog.getBreedSize()); // Ensure breed size is saved if needed
+        }
+        dogRepository.save(dog); // Save the dog entity
     }
+
 }

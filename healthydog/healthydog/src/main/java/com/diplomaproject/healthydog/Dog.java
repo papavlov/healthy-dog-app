@@ -16,8 +16,12 @@ public class Dog {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "breed_id") // This should match the foreign key column in the Dog table
+    @JoinColumn(name = "breed_id")
     private BreedsDataEntity breed;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "breed_size_id", referencedColumnName = "id")
+    private BreedSize breedSize;
 
 
     @Column(name = "age", nullable = false)
@@ -82,6 +86,14 @@ public class Dog {
 
     public void setWeight(Float weight) {
         this.weight = weight;
+    }
+
+    public BreedSize getBreedSize() {
+        return breedSize;
+    }
+
+    public void setBreedSize(BreedSize breedSize) {
+        this.breedSize = breedSize;
     }
 
     // Getters and setters for vaccines

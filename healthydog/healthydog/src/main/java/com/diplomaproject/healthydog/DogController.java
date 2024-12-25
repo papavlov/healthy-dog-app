@@ -38,6 +38,7 @@ public class DogController {
     }
 
     // Handle form submission for adding a dog
+
     @PostMapping("/add_dog")
     public String addDog(@ModelAttribute("dog") Dog dog, Authentication authentication, Model model) {
         if (authentication == null || !authentication.isAuthenticated()) {
@@ -51,6 +52,12 @@ public class DogController {
                 return "add_dog"; // Return to form with error message
             }
             dog.setUser(user); // Associate the dog with the logged-in user
+
+            // Automatically set the breed size based on the selected breed
+            BreedsDataEntity selectedBreed = breedsRepository.findById(dog.getBreed().getId())
+                    .orElseThrow(() -> new IllegalArgumentException("Breed not found"));
+            dog.setBreedSize(selectedBreed.getBreedSize()); // Set breed size from the selected breed
+
             dogService.saveDog(dog); // Save the dog
             return "redirect:/dogs/list"; // Redirect to the list of dogs
         } catch (Exception e) {
@@ -58,6 +65,7 @@ public class DogController {
             return "add_dog"; // Return to the form with error message
         }
     }
+
 
     // List all dogs for the current user
     @GetMapping("/list")

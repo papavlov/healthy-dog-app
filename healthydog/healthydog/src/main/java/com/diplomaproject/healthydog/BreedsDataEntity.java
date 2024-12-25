@@ -14,12 +14,18 @@ public class BreedsDataEntity {
     @Column(name = "breed_name")
     private String breedName;
 
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "breed_size_id", referencedColumnName = "id")
+    private BreedSize breedSize;
+
+
     // Constructors
     public BreedsDataEntity() {}
 
-    public BreedsDataEntity(String breedName) {
+    public BreedsDataEntity(String breedName, BreedSize breedSize) {
 
         this.breedName = breedName;
+        this.breedSize = breedSize;
     }
 
     // Getters and Setters
@@ -37,5 +43,13 @@ public class BreedsDataEntity {
 
     public void setBreedName(String breedName) {
         this.breedName = breedName;
+    }
+
+    public BreedSize getBreedSize() {
+        return breedSize;
+    }
+
+    public void setBreedSize(BreedSize breedSize) {
+        this.breedSize = breedSize;
     }
 }
