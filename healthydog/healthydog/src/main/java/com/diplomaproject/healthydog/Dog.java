@@ -23,7 +23,6 @@ public class Dog {
     @JoinColumn(name = "breed_size_id", referencedColumnName = "id")
     private BreedSize breedSize;
 
-
     @Column(name = "age", nullable = false)
     private Integer age;
 
@@ -92,7 +91,7 @@ public class Dog {
     }
 
     public BreedSize getBreedSize() {
-        return breedSize;
+        return breed != null ? breed.getBreedSize() : null;
     }
 
     public void setBreedSize(BreedSize breedSize) {
@@ -127,18 +126,17 @@ public class Dog {
         vaccine.setDog(null);  // Remove the dog's reference in the vaccine
     }
 
-    //methods to determine the ageGroup of a dog
-
+    // Method to determine the ageGroup of a dog
     @PrePersist
     @PreUpdate
     public void assignAgeGroup() {
-        this.ageGroup = determineAgeGroup(this.age);
+        if (this.ageGroup == null && this.age != null) {
+            this.ageGroup = determineAgeGroup(this.age);
+        }
     }
 
+
     private String determineAgeGroup(Integer age) {
-        if (age == null) {
-            return "UNKNOWN";  // Fallback if age is null
-        }
         if (age <= 1) {
             return "PUPPY";
         } else if (age <= 7) {

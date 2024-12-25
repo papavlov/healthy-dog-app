@@ -7,11 +7,20 @@ import java.util.List;
 
 @Service
 public class DogFoodService {
-    @Autowired
-    private DogFoodRepository dogFoodRepository;
+    private final DogFoodRepository dogFoodRepository;
 
-    public List<DogFood> recommendFood(String sizeCategory, String ageCategory) {
-        return dogFoodRepository.findBySizeCategoryAndAgeCategory(sizeCategory, ageCategory);
+    // Injecting the DogFoodRepository
+    public DogFoodService(DogFoodRepository dogFoodRepository) {
+        this.dogFoodRepository = dogFoodRepository;
     }
-}
 
+    // Method to get food recommendations based on breed size and age group
+    public List<DogFood> getRecommendations(BreedSize breedSize, String ageGroup) {
+        System.out.println("Fetching dog food recommendations for breed size: " + breedSize + ", age group: " + ageGroup);
+        return dogFoodRepository.findByBreedSizeAndAgeGroup(breedSize, ageGroup);
+    }
+
+
+
+
+}

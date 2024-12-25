@@ -29,7 +29,12 @@ public class DogService {
 
     // Find a dog by its ID
     public Dog findById(Long dogId) {
-        return dogRepository.findById(dogId).orElseThrow(() -> new RuntimeException("Dog not found"));
+        Dog dog = dogRepository.findById(dogId).orElse(null);
+        if (dog != null) {
+            // Ensure the ageGroup is set correctly when retrieving the dog
+            dog.assignAgeGroup();  // Trigger the method manually
+        }
+        return dog;
     }
 
     // Add a dog directly using the Dog entity

@@ -1,9 +1,11 @@
 package com.diplomaproject.healthydog;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class DogFood {
@@ -12,20 +14,27 @@ public class DogFood {
     private Long id;
 
     private String name;            // "Puppy Large Breed Food"
-    private String sizeCategory;    // small, medium, large
-    private String ageCategory;     // puppy, adult, senior
-    private String description;     // additional info about the food
+
+    @ManyToOne(cascade = CascadeType.PERSIST) // Ensure BreedSize is saved if new
+    private BreedSize breedSize;    // Relationship with BreedSize entity
+
+    private String ageGroup;        // Age group as a string (consider using an enum for better maintainability)
+
+    private String description;     // Additional info about the food
+
 
     public DogFood() {}
 
-    public DogFood(Long id, String name, String sizeCategory, String description, String ageCategory) {
+    // Constructor for manual creation
+    public DogFood(Long id, String name, BreedSize breedSize, String description, String ageGroup) {
         this.id = id;
         this.name = name;
-        this.sizeCategory = sizeCategory;
+        this.breedSize = breedSize;
         this.description = description;
-        this.ageCategory = ageCategory;
+        this.ageGroup = ageGroup;
     }
 
+    // Getters and setters
     public Long getId() {
         return id;
     }
@@ -42,20 +51,20 @@ public class DogFood {
         this.name = name;
     }
 
-    public String getSizeCategory() {
-        return sizeCategory;
+    public BreedSize getBreedSize() {
+        return breedSize;
     }
 
-    public void setSizeCategory(String sizeCategory) {
-        this.sizeCategory = sizeCategory;
+    public void setBreedSize(BreedSize breedSize) {
+        this.breedSize = breedSize;
     }
 
-    public String getAgeCategory() {
-        return ageCategory;
+    public String getAgeGroup() {
+        return ageGroup;
     }
 
-    public void setAgeCategory(String ageCategory) {
-        this.ageCategory = ageCategory;
+    public void setAgeGroup(String ageGroup) {
+        this.ageGroup = ageGroup;
     }
 
     public String getDescription() {

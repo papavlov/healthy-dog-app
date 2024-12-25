@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dog Food Recommendations</title>
+</head>
+<body>
+<h1>Food Recommendations for <span th:text="${dog.name}">Dog Name</span></h1>
+
+<div>
+    <h2>Dog Details</h2>
+    <p><strong>Breed:</strong> <span th:text="${dog.breed}">Breed</span></p>
+    <p><strong>Age:</strong> <span th:text="${dog.age}">Age</span></p>
+    <p><strong>Weight:</strong> <span th:text="${dog.weight}">Weight</span></p>
+</div>
+
+<div>
+    <h2>Dog Food Recommendations</h2>
+    <h3>Recommended Food for {{ dog.name }}:</h3>
+    <ul>
+        <th:block th:if="${recommendations != null and !recommendations.isEmpty()}">
+            <ul>
+                <li th:each="food : ${recommendations}">
+                    <span th:text="${food.name}"></span> - <span th:text="${food.description}"></span>
+                </li>
+            </ul>
+        </th:block>
+        <p th:if="${recommendations == null or recommendations.isEmpty()}">No recommendations available.</p>
+    </ul>
+</div>
+
+
+<div>
+    <a href="/dogs/list">Back to Dog List</a> <!-- Link to return to the dog list -->
+</div>
+</body>
+</html>

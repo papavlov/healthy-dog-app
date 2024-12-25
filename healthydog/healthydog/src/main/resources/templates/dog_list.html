@@ -13,10 +13,10 @@
     <h2>Your Dogs</h2>
     <ul>
         <li th:each="dog : ${dogs}">
-            <span th:text="${dog.name}">Dog Name</span> -
-            <span th:text="${dog.breed != null ? dog.breed.breedName : 'Unknown breed'}">Breed</span> - <!-- Display breed name --> -
-            <span th:text="${dog.age}">Age</span> -
-            <span th:text="${dog.weight}">Weight</span> -
+            <strong>Dog Name: </strong><span th:text="${dog.name}">Dog Name</span> -
+            <strong>Breed: </strong><span th:text="${dog.breed != null ? dog.breed.breedName : 'Unknown breed'}">Breed</span> - <!-- Display breed name --> -
+            <strong>Age: </strong><span th:text="${dog.age}">Age</span> -
+            <strong>Weight: </strong><span th:text="${dog.weight}">Weight</span> -
 
             <!-- Log Vaccines Link -->
             <a th:href="@{/dogs/{dogId}/vaccines/add(dogId=${dog.id})}"
@@ -26,6 +26,9 @@
             <!-- See All Vaccines Link -->
             <a th:href="@{/dogs/{dogId}/vaccines/view(dogId=${dog.id})}"
                th:text="'See all vaccines for ' + ${dog.name}">See all vaccines</a>
+
+            <!-- Food Recommendations Link -->
+            <a th:href="@{/api/dogfood/recommendations/{dogId}(dogId=${dog.id})}" th:text="'See Food Recommendations for ' + ${dog.name}">See Food Recommendations</a>
         </li>
     </ul>
 </div>
