@@ -58,6 +58,9 @@ public class DogController {
                     .orElseThrow(() -> new IllegalArgumentException("Breed not found"));
             dog.setBreedSize(selectedBreed.getBreedSize()); // Set breed size from the selected breed
 
+            // Explicitly assign the age group (optional but ensures correctness)
+            dog.assignAgeGroup();
+
             dogService.saveDog(dog); // Save the dog
             return "redirect:/dogs/list"; // Redirect to the list of dogs
         } catch (Exception e) {

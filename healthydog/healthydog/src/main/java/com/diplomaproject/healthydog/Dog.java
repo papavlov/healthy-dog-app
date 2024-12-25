@@ -27,6 +27,9 @@ public class Dog {
     @Column(name = "age", nullable = false)
     private Integer age;
 
+    @Column(name = "age_group")
+    private String ageGroup;
+
     @Column(name = "weight", nullable = false)
     private Float weight;
 
@@ -96,6 +99,14 @@ public class Dog {
         this.breedSize = breedSize;
     }
 
+    public String getAgeGroup() {
+        return ageGroup;
+    }
+
+    public void setAgeGroup(String ageGroup) {
+        this.ageGroup = ageGroup;
+    }
+
     // Getters and setters for vaccines
 
     public List<Vaccine> getVaccines() {
@@ -114,5 +125,26 @@ public class Dog {
     public void removeVaccine(Vaccine vaccine) {
         vaccines.remove(vaccine);
         vaccine.setDog(null);  // Remove the dog's reference in the vaccine
+    }
+
+    //methods to determine the ageGroup of a dog
+
+    @PrePersist
+    @PreUpdate
+    public void assignAgeGroup() {
+        this.ageGroup = determineAgeGroup(this.age);
+    }
+
+    private String determineAgeGroup(Integer age) {
+        if (age == null) {
+            return "UNKNOWN";  // Fallback if age is null
+        }
+        if (age <= 1) {
+            return "PUPPY";
+        } else if (age <= 7) {
+            return "ADULT";
+        } else {
+            return "SENIOR";
+        }
     }
 }
