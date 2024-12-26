@@ -29,6 +29,10 @@
 
             <!-- Food Recommendations Link -->
             <a th:href="@{/api/dogfood/recommendations/{dogId}(dogId=${dog.id})}" th:text="'See Food Recommendations for ' + ${dog.name}">See Food Recommendations</a>
+
+            <!-- Supplement Recommendations Link -->
+            <a th:href="@{/api/dogsupplements/recommendations/{dogId}(dogId=${dog.id})}"
+               th:text="'See Supplement Recommendations for ' + ${dog.name}">See Supplement Recommendations</a>
         </li>
     </ul>
 </div>
