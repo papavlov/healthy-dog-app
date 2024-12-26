@@ -10,7 +10,7 @@ public class DogSupplements {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;            // e.g., "Joint Support Supplement"
+    private String name;            //Joint Support Supplement
 
     @ManyToOne(cascade = CascadeType.PERSIST) // Relationship with BreedSize entity
     private BreedSize breedSize;    // Relationship with BreedSize entity

@@ -50,4 +50,11 @@ public class DogService {
         dogRepository.save(dog); // Save the dog entity
     }
 
+    public void deleteDog(Long dogId) {
+        if (dogRepository.existsById(dogId)) {
+            dogRepository.deleteById(dogId);
+        } else {
+            throw new RuntimeException("Dog not found");
+        }
+    }
 }

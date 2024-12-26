@@ -2,8 +2,56 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Dog List</title>
+    <style>
+        /* Style for the container that holds the dog items */
+        .dog-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* Creates 3 columns */
+            gap: 20px; /* Space between items */
+            margin-top: 20px;
+        }
+
+        /* Styling for each dog item */
+        .dog-item {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+        }
+
+        /* Make links appear on separate lines */
+        .dog-item a {
+            display: block;
+            margin: 5px 0;
+        }
+
+        /* Styling for the bottom links */
+        .bottom-links {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .bottom-links a {
+            margin: 10px;
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .bottom-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
+<!-- Success or Error Messages -->
+<div th:if="${message}">
+    <p style="color: green;">[[${message}]]</p>
+</div>
+<div th:if="${error}">
+    <p style="color: red;">[[${error}]]</p>
+</div>
+
 <h1>Dog List</h1>
 <div>
     <a href="/dogs/add_dog">Add New Dog</a>
@@ -11,30 +59,56 @@
 
 <div>
     <h2>Your Dogs</h2>
-    <ul>
-        <li th:each="dog : ${dogs}">
-            <strong>Dog Name: </strong><span th:text="${dog.name}">Dog Name</span> -
-            <strong>Breed: </strong><span th:text="${dog.breed != null ? dog.breed.breedName : 'Unknown breed'}">Breed</span> - <!-- Display breed name --> -
-            <strong>Age: </strong><span th:text="${dog.age}">Age</span> -
-            <strong>Weight: </strong><span th:text="${dog.weight}">Weight</span> -
+    <div class="dog-container">
+        <div th:each="dog : ${dogs}" class="dog-item">
+            <h3>Dog Details</h3>
+            <p><strong>Dog Name: </strong><span th:text="${dog.name}">Dog Name</span></p>
+            <p><strong>Breed: </strong><span th:text="${dog.breed != null ? dog.breed.breedName : 'Unknown breed'}">Breed</span></p>
+            <p><strong>Age:</strong> <span th:text="${dog.age}">Age</span></p>
+            <p><strong>Weight: </strong> <span th:text="${dog.weight}">Weight</span></p>
+            <p><strong>Breed Size: </strong><span th:text="${dog.breedSize != null ? dog.breedSize.sizeName : 'Unknown size'}">Breed Size</span></p>
+            <p><strong>Age Group: </strong><span th:text="${dog.ageGroup != null ? dog.ageGroup : 'Unknown'}">Age Group</span></p>
+            <p><strong>Owner: </strong><span th:text="${dog.user != null ? dog.user.firstName + ' ' + dog.user.lastName : 'No owner'}">Owner</span></p>
 
-            <!-- Log Vaccines Link -->
-            <a th:href="@{/dogs/{dogId}/vaccines/add(dogId=${dog.id})}"
-               th:text="'Log Vaccines for ' + ${dog.name}">Log Vaccines</a>
+            <div>
+                <!-- Log Vaccines Link -->
+                <a th:href="@{/dogs/{dogId}/vaccines/add(dogId=${dog.id})}"
+                   th:text="'Log Vaccines for ' + ${dog.name}">Log Vaccines</a>
+            </div>
 
+            <div>
+                <!-- See All Vaccines Link -->
+                <a th:href="@{/dogs/{dogId}/vaccines/view(dogId=${dog.id})}"
+                   th:text="'See all vaccines for ' + ${dog.name}">See all vaccines</a>
+            </div>
 
-            <!-- See All Vaccines Link -->
-            <a th:href="@{/dogs/{dogId}/vaccines/view(dogId=${dog.id})}"
-               th:text="'See all vaccines for ' + ${dog.name}">See all vaccines</a>
+            <div>
+                <!-- Food Recommendations Link -->
+                <a th:href="@{/api/dogfood/recommendations/{dogId}(dogId=${dog.id})}"
+                   th:text="'See Food Recommendations for ' + ${dog.name}">See Food Recommendations</a>
+            </div>
 
-            <!-- Food Recommendations Link -->
-            <a th:href="@{/api/dogfood/recommendations/{dogId}(dogId=${dog.id})}" th:text="'See Food Recommendations for ' + ${dog.name}">See Food Recommendations</a>
+            <div>
+                <!-- Supplement Recommendations Link -->
+                <a th:href="@{/api/dogsupplements/recommendations/{dogId}(dogId=${dog.id})}"
+                   th:text="'See Supplement Recommendations for ' + ${dog.name}">See Supplement Recommendations</a>
+            </div>
 
-            <!-- Supplement Recommendations Link -->
-            <a th:href="@{/api/dogsupplements/recommendations/{dogId}(dogId=${dog.id})}"
-               th:text="'See Supplement Recommendations for ' + ${dog.name}">See Supplement Recommendations</a>
-        </li>
-    </ul>
+            <!-- Delete Dog Link -->
+            <div>
+                <a th:href="@{/dogs/delete/{dogId}(dogId=${dog.id})}" onclick="return confirm('Are you sure you want to delete this dog?');">Delete Dog</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bottom Links for Homepage and Logout -->
+<div class="bottom-links">
+    <!-- Back to Home Page Link -->
+    <a href="/home_page" th:text="'Back to Home'">Back to Home</a>
+
+    <!-- Logout Link -->
+    <a href="/logout" th:text="'Logout'">Logout</a>
 </div>
 </body>
 </html>

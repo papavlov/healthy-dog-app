@@ -5,6 +5,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -22,7 +23,10 @@ public class DogController {
     private VaccineService vaccineService;
 
     @Autowired
-    private BreedsRepository breedsRepository; // Add the BreedsDataRepository to fetch breeds
+    private BreedsRepository breedsRepository;
+
+    @Autowired
+    private DogRepository dogRepository;
 
     // Display the Add Dog form
     @GetMapping("/add_dog")
@@ -38,7 +42,6 @@ public class DogController {
     }
 
     // Handle form submission for adding a dog
-
     @PostMapping("/add_dog")
     public String addDog(@ModelAttribute("dog") Dog dog, Authentication authentication, Model model) {
         if (authentication == null || !authentication.isAuthenticated()) {
@@ -68,7 +71,6 @@ public class DogController {
             return "add_dog"; // Return to the form with error message
         }
     }
-
 
     // List all dogs for the current user
     @GetMapping("/list")
@@ -111,4 +113,20 @@ public class DogController {
         model.addAttribute("dog", dog); // Add the dog to the model
         return "dog_detail"; // Return the dog_detail.html view
     }
+
+    // Delete a dog by ID
+    @GetMapping("/delete/{dogId}")
+    public String deleteDog(@PathVariable Long dogId, RedirectAttributes redirectAttributes) {
+        Dog dog = dogRepository.findById(dogId).orElse(null);
+
+        if (dog != null) {
+            dogRepository.delete(dog); // Delete the dog from the repository
+            redirectAttributes.addFlashAttribute("message", "Dog has been deleted successfully!");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "Dog not found!");
+        }
+
+        return "redirect:/dogs/list"; // Redirect to the list of dogs after deletion
+    }
 }
+

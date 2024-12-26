@@ -1,30 +1,52 @@
 package com.diplomaproject.healthydog;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/api/supplements")
+@Controller  // Use @Controller to render HTML views
+@RequestMapping("/api/dogsupplements")
 public class DogSupplementsController {
 
-    private final DogSupplementsService supplementsService;
+    private final DogSupplementsService dogSupplementsService;
+    private final DogService dogService;
 
-    public DogSupplementsController(DogSupplementsService supplementsService) {
-        this.supplementsService = supplementsService;
+    @Autowired
+    public DogSupplementsController(DogSupplementsService dogSupplementsService, DogService dogService) {
+        this.dogSupplementsService = dogSupplementsService;
+        this.dogService = dogService;
     }
 
-    @GetMapping("/recommend")
-    public ResponseEntity<List<DogSupplements>> recommendSupplements(
-            @RequestParam Long breedSizeId,
-            @RequestParam String ageGroup) {
+    @GetMapping("/recommendations/{dogId}")
+    public String showRecommendations(@PathVariable Long dogId, Model model) {
+        //Fetch the Dog entity
+        Dog dog = dogService.findById(dogId);
+        BreedSize breedSize = dog.getBreedSize(); //Get the BreedSize object
+        String ageGroup = dog.getAgeGroup();  //Get the age group as a String
 
-        BreedSize breedSize = new BreedSize();
-        breedSize.setId(breedSizeId);  // Create a temporary BreedSize with the given ID
+        //dog details for debugging
+        System.out.println("Dog details: " + dog);
+        System.out.println("Breed size: " + breedSize);
+        System.out.println("Age group: " + ageGroup);
 
-        List<DogSupplements> supplements = supplementsService.getSupplementsForDog(breedSize, ageGroup);
-        return ResponseEntity.ok(supplements);
+        //Fetch supplement recommendations based on breed size and age group
+        List<DogSupplements> recommendations = dogSupplementsService.getSupplementsForDog(breedSize, ageGroup);
+
+        //Add attributes to the model to pass to the Thymeleaf template
+        model.addAttribute("dog", dog);
+        model.addAttribute("supplementRecommendations", recommendations);
+
+        return "dog_supplements_recommendations";
+    }
+
+    //Endpoint for fetching dog supplement recommendations as a JSON response
+    @GetMapping("/api/recommendations")
+    public ResponseEntity<List<DogSupplements>> getRecommendations(@RequestParam BreedSize breedSize, @RequestParam String ageGroup) {
+        List<DogSupplements> recommendations = dogSupplementsService.getSupplementsForDog(breedSize, ageGroup);
+        return ResponseEntity.ok(recommendations);
     }
 }
-

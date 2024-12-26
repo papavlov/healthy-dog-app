@@ -13,14 +13,14 @@ public class DogFood {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;            // "Puppy Large Breed Food"
+    private String name;            //"Puppy Large Breed Food"
 
-    @ManyToOne(cascade = CascadeType.PERSIST) // Ensure BreedSize is saved if new
-    private BreedSize breedSize;    // Relationship with BreedSize entity
+    @ManyToOne(cascade = CascadeType.PERSIST) //Ensure BreedSize is saved if new
+    private BreedSize breedSize;    //Relationship with BreedSize entity
 
-    private String ageGroup;        // Age group as a string (consider using an enum for better maintainability)
+    private String ageGroup;        //alternative - enum
 
-    private String description;     // Additional info about the food
+    private String description;     //Additional info about the food
 
 
     public DogFood() {}

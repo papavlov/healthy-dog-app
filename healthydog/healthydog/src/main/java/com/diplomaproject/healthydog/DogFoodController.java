@@ -23,9 +23,9 @@ public class DogFoodController {
 
     @GetMapping("/recommendations/{dogId}")
     public String showRecommendations(@PathVariable Long dogId, Model model) {
-        Dog dog = dogService.findById(dogId);  // Fetch the Dog entity
-        BreedSize breedSize = dog.getBreedSize(); // Fetch BreedSize object
-        String ageGroup = dog.getAgeGroup();  // Get the age group as a String
+        Dog dog = dogService.findById(dogId);  //Fetch the Dog entity
+        BreedSize breedSize = dog.getBreedSize(); //Fetch BreedSize object
+        String ageGroup = dog.getAgeGroup();  //Get the age group as a String
 
         System.out.println("Dog details: " + dog);
         System.out.println("Breed size: " + breedSize);
@@ -40,7 +40,7 @@ public class DogFoodController {
     }
 
 
-    // Endpoint for fetching dog food recommendations as a JSON response (optional, for API usage)
+    // Endpoint for fetching dog food recommendations as a JSON response
     @GetMapping("/api/recommendations")
     public ResponseEntity<List<DogFood>> getRecommendations(@RequestParam BreedSize breedSize, @RequestParam String ageGroup) {
         List<DogFood> recommendations = dogFoodService.getRecommendations(breedSize, ageGroup);
