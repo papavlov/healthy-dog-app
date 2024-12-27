@@ -94,6 +94,12 @@
                    th:text="'See Supplement Recommendations for ' + ${dog.name}">See Supplement Recommendations</a>
             </div>
 
+            <div>
+                <!-- Collar Recommendations Link -->
+                <a th:href="@{/dogs/{dogId}/collars(dogId=${dog.id})}"
+                   th:text="'See Collar Recommendations for ' + ${dog.name}">See Collar Recommendations</a>
+            </div>
+
             <!-- Delete Dog Link -->
             <div>
                 <a th:href="@{/dogs/delete/{dogId}(dogId=${dog.id})}" onclick="return confirm('Are you sure you want to delete this dog?');">Delete Dog</a>

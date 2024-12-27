@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dog Collar Recommendations</title>
+</head>
+<body>
+<h1>Collar Recommendations for <span th:text="${dog.name}">Dog Name</span></h1>
+
+<div>
+    <h2>Dog Details</h2>
+    <p><strong>Breed: </strong><span th:text="${dog.breed != null ? dog.breed.breedName : 'Unknown breed'}">Breed</span></p>
+    <p><strong>Age:</strong> <span th:text="${dog.age}">Age</span></p>
+    <p><strong>Weight: </strong> <span th:text="${dog.weight}">Weight</span></p>
+    <p><strong>Breed Size: </strong><span th:text="${dog.breedSize != null ? dog.breedSize.sizeName : 'Unknown size'}">Breed Size</span></p>
+    <p><strong>Age Group: </strong><span th:text="${dog.ageGroup != null ? dog.ageGroup : 'Unknown'}">Age Group</span></p>
+    <p><strong>Owner: </strong><span th:text="${dog.user != null ? dog.user.firstName + ' ' + dog.user.lastName : 'No owner'}">Owner</span></p>
+</div>
+
+<div>
+    <h2>Dog Collar Recommendations</h2>
+    <h3>Recommended Collars for <span th:text="${dog.name}"></span>:</h3>
+    <ul>
+        <th:block th:if="${recommendedCollars != null and !recommendedCollars.isEmpty()}">
+            <ul>
+                <li th:each="collar : ${recommendedCollars}">
+                    <span th:text="${collar.collarName}"></span> - <span th:text="${collar.description}"></span>
+                </li>
+            </ul>
+        </th:block>
+        <p th:if="${recommendedCollars == null or recommendedCollars.isEmpty()}">No recommendations available.</p>
+    </ul>
+</div>
+<div>
+    <a href="/dogs/list">Back to Dog List</a> <!-- Link to return to the dog list -->
+</div>
+</body>
+</html>

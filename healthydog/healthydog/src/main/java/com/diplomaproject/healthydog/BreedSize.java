@@ -10,7 +10,7 @@ public class BreedSize {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //@Column(unique = true, nullable = false)
+    @Column(name = "size_name")
     private String sizeName;
 
     public BreedSize() {}
@@ -34,5 +34,12 @@ public class BreedSize {
     public void setSizeName(String sizeName) {
         this.sizeName = sizeName;
     }
+
+    //for testing purposes, to verify if correct data is printed in the console
+    @Override
+    public String toString() {
+        return this.sizeName;
+    }
+
 }
 
