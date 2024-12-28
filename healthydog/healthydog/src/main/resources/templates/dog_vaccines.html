@@ -15,6 +15,12 @@
     <p><strong>Age Group: </strong><span th:text="${dog.ageGroup != null ? dog.ageGroup : 'Unknown'}">Age Group</span></p>
     <p><strong>Owner: </strong><span th:text="${dog.user != null ? dog.user.firstName + ' ' + dog.user.lastName : 'No owner'}">Owner</span></p>
 </div>
+<!-- Vaccine Reminder Banner -->
+<div th:if="${vaccineReminder != null}">
+    <div class="alert alert-warning" role="alert">
+        <strong>Vaccine Reminder:</strong> [[${vaccineReminder}]]
+    </div>
+</div>
 <div class="container mt-5">
     <h2>Vaccines</h2>
 

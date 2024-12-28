@@ -18,6 +18,8 @@ public class VaccineController {
     private VaccineService vaccineService;
     @Autowired
     private DogService dogService;
+    @Autowired
+    private VaccineReminderService vaccineReminderService;  // Inject the VaccineReminderService
 
     // Show add vaccine form page
     @GetMapping("/add")
@@ -49,8 +51,14 @@ public class VaccineController {
     public String viewVaccines(@PathVariable Long dogId, Model model) {
         List<Vaccine> vaccines = vaccineService.getVaccinesForDog(dogId);
         Dog dog = dogService.findById(dogId);
+
+        // Get vaccine reminder for the dog
+        String vaccineReminder = vaccineReminderService.getVaccineReminder(dog);
+
         model.addAttribute("dog", dog);
         model.addAttribute("vaccines", vaccines);
+        model.addAttribute("vaccineReminder", vaccineReminder);  // Add the reminder to the model
+
         return "dog_vaccines";  // Returns the Thymeleaf page
     }
 }
