@@ -14,12 +14,19 @@
 
         <div class="mb-3">
             <label class="form-label">Dog</label>
-            <input type="text" class="form-control" th:value="${dog.name + ' (' + dog.breed + ')'}" readonly>
+            <input type="text" class="form-control" th:value="${dog.name + ' (' + dog.breed.breedName + ')'}" readonly>
         </div>
 
         <div class="mb-3">
             <label for="vaccineName" class="form-label">Vaccine Name</label>
-            <input type="text" class="form-control" id="vaccineName" name="vaccineName" required>
+            <select class="form-select" id="vaccineName" name="vaccineName" required>
+                <option value="" disabled selected>Select a Vaccine</option>
+                <!-- Iterate over vaccineNames and display formatted names -->
+                <option th:each="vaccine : ${T(com.diplomaproject.healthydog.VaccineName).values()}"
+                        th:value="${vaccine.name()}"
+                        th:text="${vaccine.getFormattedName()}">
+                </option>
+            </select>
         </div>
 
         <div class="mb-3">

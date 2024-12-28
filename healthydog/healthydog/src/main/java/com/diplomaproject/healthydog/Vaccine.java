@@ -11,7 +11,8 @@ public class Vaccine {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String vaccineName;
+    @Enumerated(EnumType.STRING)
+    private VaccineName vaccineName;
     private LocalDate vaccinationDate;
 
     @ManyToOne
@@ -28,11 +29,11 @@ public class Vaccine {
         this.id = id;
     }
 
-    public String getVaccineName() {
+    public VaccineName getVaccineName() {
         return vaccineName;
     }
 
-    public void setVaccineName(String vaccineName) {
+    public void setVaccineName(VaccineName vaccineName) {
         this.vaccineName = vaccineName;
     }
 

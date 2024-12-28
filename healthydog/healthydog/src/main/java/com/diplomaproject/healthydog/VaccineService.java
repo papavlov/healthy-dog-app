@@ -15,12 +15,12 @@ public class VaccineService {
     @Autowired
     private DogRepository dogRepository;
 
-    public Vaccine addVaccine(Long dogId, String vaccineName, LocalDate vaccinationDate) {
+    public Vaccine addVaccine(Long dogId, VaccineName vaccineName, LocalDate vaccinationDate) {
         Dog dog = dogRepository.findById(dogId)
                 .orElseThrow(() -> new RuntimeException("Dog not found"));
 
         Vaccine vaccine = new Vaccine();
-        vaccine.setVaccineName(vaccineName);
+        vaccine.setVaccineName(vaccineName);  // Use enum instead of string
         vaccine.setVaccinationDate(vaccinationDate);
         vaccine.setDog(dog);
 
@@ -31,4 +31,3 @@ public class VaccineService {
         return vaccineRepository.findByDogId(dogId);
     }
 }
-

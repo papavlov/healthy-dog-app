@@ -2,19 +2,40 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Vaccines for [[${dog.name}]]</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/css/bootstrap.min.css">
 </head>
 <body>
 <h1>Vaccines for [[${dog.name}]]</h1>
-
 <div>
+    <h3>Dog Details</h3>
+    <p><strong>Breed: </strong><span th:text="${dog.breed != null ? dog.breed.breedName : 'Unknown breed'}">Breed</span></p>
+    <p><strong>Age:</strong> <span th:text="${dog.age}">Age</span></p>
+    <p><strong>Weight: </strong> <span th:text="${dog.weight}">Weight</span></p>
+    <p><strong>Breed Size: </strong><span th:text="${dog.breedSize != null ? dog.breedSize.sizeName : 'Unknown size'}">Breed Size</span></p>
+    <p><strong>Age Group: </strong><span th:text="${dog.ageGroup != null ? dog.ageGroup : 'Unknown'}">Age Group</span></p>
+    <p><strong>Owner: </strong><span th:text="${dog.user != null ? dog.user.firstName + ' ' + dog.user.lastName : 'No owner'}">Owner</span></p>
+</div>
+<div class="container mt-5">
     <h2>Vaccines</h2>
-    <ul>
-        <li th:each="vaccine : ${vaccines}">
-            <span th:text="${vaccine.vaccineName}">Vaccine Name</span> -
-            <span th:text="${vaccine.vaccinationDate}">Vaccine Date</span>
-        </li>
-    </ul>
-    <a href="/dogs/list">Back to Dog List</a> <!-- Link to return to the dog list -->
+
+    <!-- Table displaying vaccine name and vaccination date -->
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Vaccine Name</th>
+            <th scope="col">Vaccination Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="vaccine : ${vaccines}">
+            <td th:text="${T(com.diplomaproject.healthydog.VaccineName).valueOf(vaccine.vaccineName).getFormattedName()}"></td>
+            <td th:text="${vaccine.vaccinationDate}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Link to return to the dog list -->
+    <a href="/dogs/list" class="btn btn-secondary">Back to Dog List</a>
 </div>
 
 </body>

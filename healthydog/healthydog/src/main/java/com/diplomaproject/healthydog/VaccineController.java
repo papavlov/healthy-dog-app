@@ -28,13 +28,14 @@ public class VaccineController {
         }
         model.addAttribute("dog", dog);  // Pass the dog to the form
         model.addAttribute("vaccine", new Vaccine());
+        model.addAttribute("vaccineNames", VaccineName.values());  // Add available vaccine options
         return "add_vaccine";  // Thymeleaf template
     }
 
     // Submit vaccine form and redirect to dog list page
     @PostMapping
     public String logVaccine(@PathVariable Long dogId,
-                             @RequestParam String vaccineName,
+                             @RequestParam VaccineName vaccineName,  // Enum instead of String
                              @RequestParam LocalDate vaccinationDate) {
         // Call the addVaccine method from VaccineService
         vaccineService.addVaccine(dogId, vaccineName, vaccinationDate);
