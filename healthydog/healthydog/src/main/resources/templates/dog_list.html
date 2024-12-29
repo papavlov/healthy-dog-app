@@ -3,29 +3,56 @@
 <head>
     <title>Dog List</title>
     <style>
-        /* Style for the container that holds the dog items */
         .dog-container {
             display: grid;
-            grid-template-columns: repeat(3, 1fr); /* Creates 3 columns */
-            gap: 20px; /* Space between items */
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
             margin-top: 20px;
         }
 
-        /* Styling for each dog item */
         .dog-item {
             border: 1px solid #ccc;
             padding: 10px;
             text-align: center;
             border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
         }
 
-        /* Make links appear on separate lines */
-        .dog-item a {
-            display: block;
-            margin: 5px 0;
+        .dog-item img {
+            max-width: 100%;
+            height: auto;
         }
 
-        /* Styling for the bottom links */
+        .form-container {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .form-container input[type="file"] {
+            margin-bottom: 10px;
+        }
+
+        .form-container button {
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+.dog-image-container {
+    width: 150px;  /* Fixed width */
+    height: 150px; /* Fixed height */
+    background-size: cover; /* Scale the image to cover the container */
+    background-position: center; /* Center the image within the container */
+    border-radius: 8px; /* Optional: Adds rounded corners */
+    margin-bottom: 10px; /* Optional: Adds some space below the image */
+}
+
+
+
         .bottom-links {
             margin-top: 20px;
             text-align: center;
@@ -41,9 +68,22 @@
         .bottom-links a:hover {
             text-decoration: underline;
         }
+
+        @media (max-width: 768px) {
+            .dog-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .dog-container {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
+
 <!-- Success or Error Messages -->
 <div th:if="${message}">
     <p style="color: green;">[[${message}]]</p>
@@ -61,6 +101,21 @@
     <h2>Your Dogs</h2>
     <div class="dog-container">
         <div th:each="dog : ${dogs}" class="dog-item">
+            <!-- Display dog image if available -->
+            <div class="dog-image-container"
+                 th:style="'background-image: url(' + @{${dog.imageUrl != null && !dog.imageUrl.isEmpty() ? '/' + dog.imageUrl : '/default-dog-image.jpg'}} + ')'"
+                 title="Image of ${dog.name}">
+            </div>
+
+
+            <!-- Change Image Button Form -->
+            <div class="form-container">
+                <form th:action="@{/dogs/{id}/changeImage(id=${dog.id})}" method="post" enctype="multipart/form-data">
+                    <input type="file" name="image" />
+                    <button type="submit">Change Image</button>
+                </form>
+            </div>
+
             <h3>Dog Details</h3>
             <p><strong>Dog Name: </strong><span th:text="${dog.name}">Dog Name</span></p>
             <p><strong>Breed: </strong><span th:text="${dog.breed != null ? dog.breed.breedName : 'Unknown breed'}">Breed</span></p>
@@ -71,36 +126,25 @@
             <p><strong>Owner: </strong><span th:text="${dog.user != null ? dog.user.firstName + ' ' + dog.user.lastName : 'No owner'}">Owner</span></p>
 
             <div>
-                <!-- Log Vaccines Link -->
-                <a th:href="@{/dogs/{dogId}/vaccines/add(dogId=${dog.id})}"
-                   th:text="'Log Vaccines for ' + ${dog.name}">Log Vaccines</a>
+                <a th:href="@{/dogs/{dogId}/vaccines/add(dogId=${dog.id})}" th:text="'Log Vaccines for ' + ${dog.name}">Log Vaccines</a>
             </div>
 
             <div>
-                <!-- See All Vaccines Link -->
-                <a th:href="@{/dogs/{dogId}/vaccines/view(dogId=${dog.id})}"
-                   th:text="'See all vaccines for ' + ${dog.name}">See all vaccines</a>
+                <a th:href="@{/dogs/{dogId}/vaccines/view(dogId=${dog.id})}" th:text="'See all vaccines for ' + ${dog.name}">See all vaccines</a>
             </div>
 
             <div>
-                <!-- Food Recommendations Link -->
-                <a th:href="@{/api/dogfood/recommendations/{dogId}(dogId=${dog.id})}"
-                   th:text="'See Food Recommendations for ' + ${dog.name}">See Food Recommendations</a>
+                <a th:href="@{/api/dogfood/recommendations/{dogId}(dogId=${dog.id})}" th:text="'See Food Recommendations for ' + ${dog.name}">See Food Recommendations</a>
             </div>
 
             <div>
-                <!-- Supplement Recommendations Link -->
-                <a th:href="@{/api/dogsupplements/recommendations/{dogId}(dogId=${dog.id})}"
-                   th:text="'See Supplement Recommendations for ' + ${dog.name}">See Supplement Recommendations</a>
+                <a th:href="@{/api/dogsupplements/recommendations/{dogId}(dogId=${dog.id})}" th:text="'See Supplement Recommendations for ' + ${dog.name}">See Supplement Recommendations</a>
             </div>
 
             <div>
-                <!-- Collar Recommendations Link -->
-                <a th:href="@{/dogs/{dogId}/collars(dogId=${dog.id})}"
-                   th:text="'See Collar Recommendations for ' + ${dog.name}">See Collar Recommendations</a>
+                <a th:href="@{/dogs/{dogId}/collars(dogId=${dog.id})}" th:text="'See Collar Recommendations for ' + ${dog.name}">See Collar Recommendations</a>
             </div>
 
-            <!-- Delete Dog Link -->
             <div>
                 <a th:href="@{/dogs/delete/{dogId}(dogId=${dog.id})}" onclick="return confirm('Are you sure you want to delete this dog?');">Delete Dog</a>
             </div>
@@ -108,13 +152,10 @@
     </div>
 </div>
 
-<!-- Bottom Links for Homepage and Logout -->
 <div class="bottom-links">
-    <!-- Back to Home Page Link -->
     <a href="/home_page" th:text="'Back to Home'">Back to Home</a>
-
-    <!-- Logout Link -->
     <a href="/logout" th:text="'Logout'">Logout</a>
 </div>
+
 </body>
 </html>

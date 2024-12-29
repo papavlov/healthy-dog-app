@@ -1,13 +1,22 @@
 package com.diplomaproject.healthydog;
 
+import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Comparator;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/dogs")
@@ -28,6 +37,11 @@ public class DogController {
     @Autowired
     private DogRepository dogRepository;
 
+    @Autowired
+    private DogImageService dogImageService;
+
+    private static final String UPLOAD_DIR = "uploads/";
+
     // Display the Add Dog form
     @GetMapping("/add_dog")
     public String addDog(Model model, Authentication authentication) {
@@ -43,33 +57,87 @@ public class DogController {
 
     // Handle form submission for adding a dog
     @PostMapping("/add_dog")
-    public String addDog(@ModelAttribute("dog") Dog dog, Authentication authentication, Model model) {
+    public String addDog(@ModelAttribute("dog") Dog dog,
+                         @RequestParam("dogImage") MultipartFile file,
+                         Authentication authentication,
+                         Model model) {
         if (authentication == null || !authentication.isAuthenticated()) {
-            return "redirect:/login"; // Ensure user is logged in
+            return "redirect:/login";
         }
         try {
-            String username = authentication.getName(); // Get logged-in user's username
-            User user = userService.findByEmail(username); // Fetch user by email
+            String username = authentication.getName();
+            User user = userService.findByEmail(username);
             if (user == null) {
                 model.addAttribute("error", "User not found. Please log in again.");
-                return "add_dog"; // Return to form with error message
+                return "add_dog";
             }
-            dog.setUser(user); // Associate the dog with the logged-in user
+            dog.setUser(user);
 
-            // Automatically set the breed size based on the selected breed
+            // Fetch the breed and set the breed size
             BreedsDataEntity selectedBreed = breedsRepository.findById(dog.getBreed().getId())
                     .orElseThrow(() -> new IllegalArgumentException("Breed not found"));
-            dog.setBreedSize(selectedBreed.getBreedSize()); // Set breed size from the selected breed
+            dog.setBreedSize(selectedBreed.getBreedSize());
 
-            // Explicitly assign the age group (optional but ensures correctness)
+            // Assign the appropriate age group based on dog’s age
             dog.assignAgeGroup();
 
-            dogService.saveDog(dog); // Save the dog
-            return "redirect:/dogs/list"; // Redirect to the list of dogs
-        } catch (Exception e) {
-            model.addAttribute("error", "Failed to save the dog. Please try again.");
-            return "add_dog"; // Return to the form with error message
+            // Handle image upload (if file is provided)
+            if (!file.isEmpty()) {
+                // Resize and save the image
+                String fileName = saveResizedImage(file);
+                // Set the image URL for the dog object
+                dog.setImageUrl("uploads/" + fileName);  // Store relative path
+            }
+
+            // Save the dog entity with all attributes including the image URL
+            dogService.saveDog(dog);
+
+            // Redirect to the dog list page after saving the dog
+            return "redirect:/dogs/list";
+        } catch (IOException e) {
+            model.addAttribute("error", "Failed to save the dog image. Please try again.");
+            return "add_dog";
         }
+    }
+
+    // Method to resize the uploaded image and save it
+    private String saveResizedImage(MultipartFile image) throws IOException {
+        // Ensure the file has a unique name
+        String fileName = UUID.randomUUID().toString() + "_" + image.getOriginalFilename();
+        Path uploadPath = Paths.get(UPLOAD_DIR);
+
+        if (!Files.exists(uploadPath)) {
+            Files.createDirectories(uploadPath);  // Create the uploads directory if it doesnt exist
+        }
+
+        // Create the final file path
+        Path targetLocation = uploadPath.resolve(fileName);
+
+        // Resize the image to a fixed size (300x300)
+        Thumbnails.of(image.getInputStream())
+                .size(300, 300)  // Set fixed size (width, height)
+                .toFile(targetLocation.toFile());
+
+        return fileName;
+    }
+
+    // For changing dog image
+    @PostMapping("/{id}/changeImage")
+    public String changeImage(@PathVariable("id") Long dogId, @RequestParam("image") MultipartFile image) {
+        // Handle the file upload and update the dog's image URL
+        try {
+            String imageName = saveResizedImage(image);
+
+            // Update the dog's record in the database
+            Dog dog = dogService.findById(dogId);
+            dog.setImageUrl("uploads/" + imageName);
+            dogService.saveDog(dog);
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Handle error properly (e.g., show a message to the user)
+        }
+
+        return "redirect:/dogs/list"; // Redirect back to the dog list
     }
 
     // List all dogs for the current user
@@ -96,6 +164,7 @@ public class DogController {
             dog.setVaccines(vaccines); // Set vaccines in the dog object
         }
 
+        dogs.sort(Comparator.comparing(Dog::getId));
         // Add the list of dogs (with vaccines) to the model
         model.addAttribute("dogs", dogs);
 
@@ -129,4 +198,3 @@ public class DogController {
         return "redirect:/dogs/list"; // Redirect to the list of dogs after deletion
     }
 }
-

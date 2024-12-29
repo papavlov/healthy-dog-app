@@ -40,6 +40,8 @@ public class Dog {
     @OneToMany(mappedBy = "dog", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Vaccine> vaccines = new ArrayList<>();
 
+    private String imageUrl;
+
     // Getters and setters
 
     public User getUser() {
@@ -144,5 +146,13 @@ public class Dog {
         } else {
             return "SENIOR";
         }
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

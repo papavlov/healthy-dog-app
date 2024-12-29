@@ -27,8 +27,8 @@ public class VaccineReminderScheduler {
     private DogService dogService;
 
     // Scheduled to run once a day at midnight
-   // @Scheduled(cron = "0 0 0 * * *") // Run every day at midnight
-    @Scheduled(cron = "0 * * * * *")//every minute
+    @Scheduled(cron = "0 0 0 * * *") // Run every day at midnight
+    //@Scheduled(cron = "0 * * * * *")//every minute - for testing
     public void sendDailyVaccineReminders() {
         List<User> users = userService.findAllUsers();  // Fetch all users
         for (User user : users) {
