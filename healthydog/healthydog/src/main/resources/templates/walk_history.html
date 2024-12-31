@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Walk History</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-4">
+    <h2>Walk History for <span th:text="${dog.name}"></span></h2>
+
+    <!-- Success message -->
+    <div th:if="${message}" class="alert alert-success">
+        <p th:text="${message}"></p>
+    </div>
+    <div th:if="${error}" class="alert alert-warning">
+        <p th:text="${error}"></p>
+    </div>
+
+    <!-- Date filter form -->
+    <form th:action="@{/dogs/{dogId}/walks/history/filter(dogId=${dog.id})}" method="get" class="mb-3">
+        <div class="form-group">
+            <label for="walkDate">Select Date:</label>
+            <input type="date" id="walkDate" name="walkDate" class="form-control" th:value="${selectedDate}" required>
+        </div>
+        <button type="submit" class="btn btn-primary mt-2">Filter Walks</button>
+    </form>
+
+
+    <!-- Walk log table -->
+    <table class="table table-bordered mt-3">
+        <thead>
+        <tr>
+            <th>Date</th>
+            <th>Distance (km)</th>
+            <th>Duration (min)</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="walk : ${walks}">
+            <td th:text="${walk.walkDate}"></td>
+            <td th:text="${walk.distance}"></td>
+            <td th:text="${walk.duration}"></td>
+            <td>
+                <!-- Delete-->
+                <a th:href="@{/dogs/{dogId}/walks/delete/{id}(dogId=${dog.id}, id=${walk.id})}"
+                   onclick="return confirm('Are you sure you want to remove this walk?');">
+                    Delete
+                </a>
+            </td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(walks)}">
+            <td colspan="4" class="text-center">No walks logged yet.</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Link to log a new walk -->
+    <a th:href="@{/dogs/{dogId}/walks/add(dogId=${dog.id})}" class="btn btn-success">Log a New Walk</a>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

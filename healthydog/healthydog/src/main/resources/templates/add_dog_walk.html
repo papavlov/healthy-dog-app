@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Track Your Dog's Walks</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+  <h2>Track Your Dog's Walks</h2>
+  <form id="dogWalkForm" method="POST" th:action="@{/dogs/{dogId}/walks/add(dogId=${dog.id})}">
+
+    <input type="hidden" name="dogId" th:value="${dog.id}">
+
+    <div class="mb-3">
+      <label class="form-label">Dog</label>
+      <input type="text" class="form-control" th:value="${dog.name + ' (' + dog.breed.breedName + ')'}" readonly>
+    </div>
+
+    <!-- Calendar Date Picker for Walk Date -->
+    <div class="mb-3">
+      <label for="walkDate" class="form-label">Walk Date</label>
+      <input type="date" class="form-control" id="walkDate" name="walkDate" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="distance" class="form-label">Distance (in km)</label>
+      <input type="number" class="form-control" id="distance" name="distance" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="duration" class="form-label">Duration (in minutes)</label>
+      <input type="number" class="form-control" id="duration" name="duration" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit Walk</button>
+  </form>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

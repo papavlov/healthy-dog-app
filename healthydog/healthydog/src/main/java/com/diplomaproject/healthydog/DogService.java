@@ -57,4 +57,50 @@ public class DogService {
             throw new RuntimeException("Dog not found");
         }
     }
+
+    //to calculate dog walks
+
+    public Double calculateDailyGoal(Dog dog) {
+        BreedSize breedSize = dog.getBreedSize();  // Fetch breed size through Breed
+        String ageGroup = dog.getAgeGroup();
+
+        // Default to a minimum value if breedSize or ageGroup is unknown
+        if (breedSize == null || ageGroup == null || breedSize.getSizeName() == null) {
+            return 2.0;  // Minimum goal
+        }
+
+        String sizeName = breedSize.getSizeName().toUpperCase();  // Get the size name for comparison
+
+        switch (sizeName) {
+            case "LARGE":
+                if (ageGroup.equalsIgnoreCase("PUPPY")) {
+                    return 3.0;
+                } else if (ageGroup.equalsIgnoreCase("ADULT")) {
+                    return 5.0;
+                } else {
+                    return 4.0;
+                }
+            case "MEDIUM":
+                if (ageGroup.equalsIgnoreCase("PUPPY")) {
+                    return 2.5;
+                } else if (ageGroup.equalsIgnoreCase("ADULT")) {
+                    return 3.5;
+                } else {
+                    return 3.0;
+                }
+            case "SMALL":
+                if (ageGroup.equalsIgnoreCase("PUPPY")) {
+                    return 2.0;
+                } else if (ageGroup.equalsIgnoreCase("ADULT")) {
+                    return 3.0;
+                } else {
+                    return 2.5;
+                }
+            default:
+                return 2.0;  // Fallback for unknown sizes
+        }
+    }
+
+
+
 }
