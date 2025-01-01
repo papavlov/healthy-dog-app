@@ -37,7 +37,7 @@ public class WebSecurityConfig {
         http.authenticationProvider(authenticationProvider())
                 .authorizeHttpRequests()
                 .requestMatchers("/css/**", "/js/**", "/images/**").permitAll() // Permits static files
-                .requestMatchers("/dogs/add_dog", "/dogs/add_dog-form").authenticated()
+                .requestMatchers("/dogs/add_dog", "/dogs/add_dog-form", "/dogs").authenticated()
                 .anyRequest().permitAll()
                 .and()
                 .csrf()  // Ensure CSRF is enabled for safety

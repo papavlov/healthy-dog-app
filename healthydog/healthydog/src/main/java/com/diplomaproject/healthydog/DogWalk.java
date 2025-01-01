@@ -23,6 +23,10 @@ public class DogWalk {
     @Column(name = "duration", nullable = false)
     private Integer duration; // duration in minutes
 
+    @Transient
+    private Double dailyGoal;
+
+
     public DogWalk() {}
 
     public DogWalk(Dog dog, LocalDate walkDate, Double distance, Integer duration) {
@@ -73,5 +77,12 @@ public class DogWalk {
 
     public void setDuration(Integer duration) {
         this.duration = duration;
+    }
+
+    public Double getDailyGoal(DogService dogService) {
+        if (dailyGoal == null) {
+            dailyGoal = dogService.calculateDailyGoal(this.getDog());
+        }
+        return dailyGoal;
     }
 }

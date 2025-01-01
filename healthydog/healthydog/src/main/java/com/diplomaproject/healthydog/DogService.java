@@ -78,7 +78,7 @@ public class DogService {
                 } else if (ageGroup.equalsIgnoreCase("ADULT")) {
                     return 5.0;
                 } else {
-                    return 4.0;
+                    return 4.0;//for seniors
                 }
             case "MEDIUM":
                 if (ageGroup.equalsIgnoreCase("PUPPY")) {
@@ -97,7 +97,7 @@ public class DogService {
                     return 2.5;
                 }
             default:
-                return 2.0;  // Fallback for unknown sizes
+                return 2.0;  //for unknown sizes
         }
     }
 

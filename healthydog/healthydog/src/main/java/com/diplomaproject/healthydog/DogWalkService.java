@@ -16,6 +16,10 @@ public class DogWalkService {
     @Autowired
     private DogRepository dogRepository;
 
+    @Autowired
+    private DogService dogService;
+
+
     public void logWalk(Long dogId, Double distance, LocalDate walkDate, Integer duration) {
         Dog dog = dogRepository.findById(dogId)
                 .orElseThrow(() -> new RuntimeException("Dog not found"));
@@ -45,8 +49,13 @@ public class DogWalkService {
     }
 
     public List<DogWalk> findWalksByDogId(Long dogId) {
-        return dogWalkRepository.findByDogId(dogId);
+        List<DogWalk> walks = dogWalkRepository.findByDogId(dogId);
+        for (DogWalk walk : walks) {
+            walk.getDailyGoal(dogService);
+        }
+        return walks;
     }
+
     public List<DogWalk> findWalksByDogIdAndDate(Long dogId, LocalDate walkDate) {
         return dogWalkRepository.findByDogIdAndWalkDate(dogId, walkDate);
     }
