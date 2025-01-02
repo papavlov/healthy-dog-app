@@ -1,20 +1,71 @@
 <!DOCTYPE html>
-<html lang="en">
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome to the Healthy Dog app!</title>
     <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
-    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
-    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #a3daff;
+            font-family: 'Poppins', sans-serif;
+        }
+        .navbar {
+            background-color: #faf9f6; /* Lighter creamy white */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+        .content-container {
+            margin-top: 100px;
+        }
+        .content-container h1 {
+            font-weight: 600;
+            color: #333;
+        }
+        .content-container p {
+            font-size: 1.2rem;
+            color: #555;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
-<div class="container text-center">
-    <h1>Welcome to the Healthy Dog app!</h1>
+<nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/home_page}">Healthy Dog App</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/dogs/add_dog}">Add a Dog</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/dogs/list}">See Your Dogs</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ms-right">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/logout}">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
 
-    <h3><a th:href="@{/dogs/add_dog}">Add a dog</a></h3>
-    <h3><a th:href="@{dogs/list}">See your dogs</a></h3>
-
+<div class="container text-center content-container">
+    <h1>Healthy Dogs, Happy Owners!</h1>
+    <p>Track your dog's health effortlessly and ensure their well-being every step of the way.</p>
+    <a class="btn btn-primary" th:href="@{/dogs/add_dog}">Get Started</a>
 </div>
+
+<script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>

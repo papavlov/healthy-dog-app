@@ -1,22 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Welcome to the Healthy Dog app!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthy Dog App</title>
     <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
-    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
-    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #a3daff;
+            font-family: 'Poppins', sans-serif;
+        }
+        .navbar {
+            background-color: #faf9f6; /* Lighter creamy white */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+        .login-container {
+            background-color: #faf9f6;
+            padding: 5rem; /*for longer form */
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 550px;
+            margin: 100px auto;
+            text-align: center;
+        }
+        .login-container h1 {
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+        .btn-primary {
+            background-color: #33adff; /* button color */
+            border-color: #33adff;
+            padding: 0.5rem 1.2rem;
+            font-size: 0.9rem;
+            border-radius: 25px; /* Rounded edges */
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+        .or-divider {
+            margin: 1rem 0;
+            font-size: 1rem;
+            color: #555;
+        }
+        .forgot-password {
+            margin-top: 1rem;
+        }
+    </style>
 </head>
 <body>
-    <div class="container text-center">
-        <h1>Welcome to the Healthy Dog app!</h1>
-        <!--<h3><a th:href="@{users}">List of Users</a></h3>-->
-        <h3><a th:href="@{register}">Register</a></h3>
-        <h3><a th:href="@{login}">Login</a></h3>
-
-        <!-- Forgot Password Link -->
-        <p><a href="/forgot-password">Forgot your password?</a></p>
+<nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/}">Healthy Dog App</a>
     </div>
+</nav>
+
+<div class="login-container">
+    <h1>Welcome to the Healthy Dog App!</h1>
+    <a class="btn btn-primary" th:href="@{/login}">Log In</a>
+    <div class="or-divider">------ or ------</div>
+    <a class="btn btn-primary" th:href="@{/register}">Register</a>
+    <p class="forgot-password">
+        <a href="/forgot-password">Forgot your password?</a>
+    </p>
+</div>
+
+<script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>

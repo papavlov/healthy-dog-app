@@ -1,20 +1,65 @@
 <!DOCTYPE html>
-<html lang="en">
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="ISO-8859-1">
-  <title>Sign Up - CodeJava</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Healthy Dog App - Sign Up</title>
   <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
   <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
   <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+  <style>
+    body {
+      background-color: #a3daff;
+      font-family: 'Poppins', sans-serif;
+    }
+    .navbar {
+      background-color: #faf9f6; /* Lighter creamy white */
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+    }
+    .registration-container {
+      background-color: #faf9f6;
+      padding: 3rem;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 550px;
+      margin: 100px auto;
+      text-align: center;
+    }
+    .registration-container h1 {
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    .form-control {
+      border-radius: 5px;
+    }
+    .btn-primary {
+      background-color: #33adff;
+      border-color: #33adff;
+      padding: 0.5rem 1.2rem;
+      font-size: 0.9rem;
+      border-radius: 25px;
+      width: 100%;
+      margin-top: 1rem;
+    }
+  </style>
 </head>
 <body>
-<div class="container text-center">
-  <div>
-    <h1>User Registration - Sign Up</h1>
+<nav class="navbar navbar-expand-lg navbar-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">Healthy Dog App</a>
   </div>
-  <form th:action="@{/process_register}" th:object="${user}"
-        method="post" style="max-width: 600px; margin: 0 auto;">
+</nav>
+
+<div class="registration-container">
+  <h1>Sign Up</h1>
+  <p>Create an account for the best dog health tracker for free</p>
+  <form th:action="@{/process_register}" th:object="${user}" method="post">
     <div class="m-3">
       <div class="form-group row">
         <label class="col-4 col-form-label">E-mail: </label>
@@ -26,24 +71,21 @@
       <div class="form-group row">
         <label class="col-4 col-form-label">Password: </label>
         <div class="col-8">
-          <input type="password" th:field="*{password}" class="form-control"
-                 required minlength="6" maxlength="10"/>
+          <input type="password" th:field="*{password}" class="form-control" required minlength="6" maxlength="10"/>
         </div>
       </div>
 
       <div class="form-group row">
         <label class="col-4 col-form-label">First Name: </label>
         <div class="col-8">
-          <input type="text" th:field="*{firstName}" class="form-control"
-                 required minlength="2" maxlength="20"/>
+          <input type="text" th:field="*{firstName}" class="form-control" required minlength="2" maxlength="20"/>
         </div>
       </div>
 
       <div class="form-group row">
         <label class="col-4 col-form-label">Last Name: </label>
         <div class="col-8">
-          <input type="text" th:field="*{lastName}" class="form-control"
-                 required minlength="2" maxlength="20" />
+          <input type="text" th:field="*{lastName}" class="form-control" required minlength="2" maxlength="20" />
         </div>
       </div>
 
@@ -53,5 +95,6 @@
     </div>
   </form>
 </div>
+
 </body>
 </html>
