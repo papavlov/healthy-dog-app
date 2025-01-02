@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,10 +32,10 @@ public class UserService {
 
     // Save a new user (register)
     public User saveUser(User user) {
-        // Encrypt the user's password before saving
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        // Remove password encoding here since it's already encoded in the resetPassword method
         return userRepository.save(user);
     }
+
 
     // Update an existing user
     public User updateUser(Long id, User userDetails) {
@@ -62,4 +63,25 @@ public class UserService {
     //public User findByUsername(String username) {
       //  return userRepository.findByUsername(username);
     //}
+
+    // Find user by reset token
+    public User findByResetToken(String token) {
+        return userRepository.findByResetToken(token);
+    }
+
+
+    // Set reset token and expiration for password reset
+    public void setResetToken(User user, String token) {
+        user.setResetToken(token);
+        user.setTokenExpiryTime(LocalDateTime.now().plusHours(1)); // Token valid for 1 hour
+        userRepository.save(user);
+    }
+
+    // Clear the reset token after successful reset
+    public void clearResetToken(User user) {
+        user.setResetToken(null);
+        user.setTokenExpiryTime(null);
+        userRepository.save(user);
+    }
+
 }

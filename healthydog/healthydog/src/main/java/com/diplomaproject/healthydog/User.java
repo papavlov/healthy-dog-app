@@ -2,6 +2,8 @@ package com.diplomaproject.healthydog;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -21,6 +23,11 @@ public class User {
 
     @Column(name = "last_name", nullable = false)
     private String lastName;
+
+    private String resetToken;
+
+    @Column(name = "token_expiry_time")
+    private LocalDateTime tokenExpiryTime;
 
     public Long getId() {
         return id;
@@ -60,5 +67,22 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    // Getters and setters for resetToken
+    public String getResetToken() {
+        return resetToken;
+    }
+
+    public void setResetToken(String resetToken) {
+        this.resetToken = resetToken;
+    }
+
+    public LocalDateTime getTokenExpiryTime() {
+        return tokenExpiryTime;
+    }
+
+    public void setTokenExpiryTime(LocalDateTime tokenExpiryTime) {
+        this.tokenExpiryTime = tokenExpiryTime;
     }
 }

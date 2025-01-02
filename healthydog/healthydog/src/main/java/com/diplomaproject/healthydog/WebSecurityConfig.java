@@ -38,11 +38,12 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers("/css/**", "/js/**", "/images/**").permitAll() // Permits static files
                 .requestMatchers("/dogs/add_dog", "/dogs/add_dog-form", "/dogs").authenticated()
+                .requestMatchers("/forgot-password", "/reset-password").permitAll()
                 .anyRequest().permitAll()
                 .and()
-                .csrf()  // Ensure CSRF is enabled for safety
-                .and()
-                .formLogin()
+                //.csrf().ignoringRequestMatchers("/forgot-password", "/reset-password") // Allow CSRF for specific pages  // Ensure CSRF is enabled for safety
+                //.and()
+                .formLogin().permitAll()
                 .usernameParameter("email")
                 .defaultSuccessUrl("/home_page", true)
                 .permitAll()
