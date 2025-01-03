@@ -50,6 +50,8 @@ public class DogController {
         }
 
         List<BreedsDataEntity> breeds = breedsRepository.findAll(); // Fetch all breeds
+        System.out.println("Breeds count: " + breeds.size());  //test print to verify breeds number
+
         model.addAttribute("breeds", breeds); // Add breeds to the model
         model.addAttribute("dog", new Dog()); // Add empty Dog object for form binding
         return "add_dog"; // Return the add_dog.html view

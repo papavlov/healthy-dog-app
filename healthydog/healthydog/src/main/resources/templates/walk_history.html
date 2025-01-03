@@ -155,7 +155,7 @@
 
     <!-- Buttons to return to the dog list and view full walk history -->
 
-    <a th:href="@{/dogs}" class="btn btn-secondary">Return to Dog List</a>
+    <a th:href="@{/dogs/list}" class="btn btn-secondary">Return to Dog List</a>
 
     <a th:if="${selectedDate != null}" th:href="@{/dogs/{dogId}/walks/history(dogId=${dog.id})}" class="btn btn-secondary">View Full Walk History</a>
     <!-- Link to log a new walk -->

@@ -37,6 +37,11 @@ public class BreedsService {
             while ((nextLine = reader.readNext()) != null) {
                 Long breedId = Long.parseLong(nextLine[0]);
                 String breedName = nextLine[1];
+                // Check if breed already exists in the database
+                if (dogBreedRepository.findByBreedName(breedName).isPresent()) {
+                    // If the breed already exists, skip it to avoid duplication
+                    continue;
+                }
 
                 // Determine breed size dynamically
                 BreedSize breedSize = determineSizeByBreed(breedName);

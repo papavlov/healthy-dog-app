@@ -7,16 +7,40 @@
   <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
   <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
   <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"> <!-- Added Google Font Import -->
   <style>
     body {
       background-color: #a3daff;
-      font-family: 'Poppins', sans-serif;
+      font-family: 'Poppins', sans-serif; /* Apply Poppins font */
     }
     .navbar {
-      background-color: #faf9f6; /* Lighter creamy white */
+      background-color: #faf9f6;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       padding-top: 1rem;
       padding-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .navbar-brand {
+      display: flex;
+      align-items: center;
+      font-size: 1.8rem;
+      position: relative;
+      padding-left: 90px; /* Add left padding to ensure space for the logo */
+    }
+    .navbar-brand .logo-container {
+      height: 80px;
+      width: 80px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      margin-right: 10px;
+      background-color: #faf9f6;
+      border-radius: 50%;
+      position: absolute;
+      left: 10px; /* Set left position for the logo */
+      top: 50%;
+      transform: translateY(-50%); /* Vertically center the logo */
     }
     .registration-container {
       background-color: #faf9f6;
@@ -50,12 +74,20 @@
   </style>
 </head>
 <body>
+
+<!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/">Healthy Dog App</a>
+  <div class="container-fluid d-flex justify-content-between align-items-center">
+    <a class="navbar-brand" th:href="@{/}">
+      <div class="logo-container"
+           th:style="'background-image: url(' + @{/logo.png} + ')'">
+      </div>
+      Healthy Dog App
+    </a>
   </div>
 </nav>
 
+<!-- Registration Container -->
 <div class="registration-container">
   <h1>Sign Up</h1>
   <p>Create an account for the best dog health tracker for free</p>

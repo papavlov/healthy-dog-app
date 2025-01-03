@@ -9,12 +9,37 @@
             background-color: #a3daff;
             font-family: 'Poppins', sans-serif;
         }
+
         .navbar {
-            background-color: #faf9f6; /* Lighter creamy white */
+            background-color: #faf9f6;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             padding-top: 1rem;
             padding-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            position: relative;
+            padding-left: 90px; /* Add left padding to ensure space for the logo */
+        }
+        .navbar-brand .logo-container {
+            height: 80px;
+            width: 80px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            margin-right: 10px;
+            background-color: #faf9f6;
+            border-radius: 50%;
+            position: absolute;
+            left: 10px; /* Set left position for the logo */
+            top: 50%;
+            transform: translateY(-50%); /* Vertically center the logo */
+        }
+
         .dog-container {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -106,7 +131,6 @@
                 grid-template-columns: 1fr;
             }
         }
-
     </style>
 </head>
 <body>
@@ -114,7 +138,12 @@
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light">
     <div class="container-fluid">
-        <a class="navbar-brand" th:href="@{/home_page}">Healthy Dog App</a>
+        <a class="navbar-brand" th:href="@{/home_page}">
+            <div class="logo-container"
+                 th:style="'background-image: url(' + @{/logo.png} + ')'">
+            </div>
+            Healthy Dog App
+        </a>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">

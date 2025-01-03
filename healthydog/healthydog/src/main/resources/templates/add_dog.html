@@ -17,7 +17,6 @@
     </div>
 
     <!-- Dog Form -->
-    <!-- Added enctype="multipart/form-data" to handle file uploads -->
     <form action="/dogs/add_dog" method="post" th:action="@{/dogs/add_dog}" th:object="${dog}" enctype="multipart/form-data">
         <!-- CSRF Protection -->
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
@@ -31,6 +30,7 @@
             <label for="breed" class="form-label">Breed</label>
             <select th:field="*{breed}" id="breed" class="form-select" required>
                 <option value="" disabled selected>Select a Breed</option>
+                <!-- Iterate over breeds and display each breed -->
                 <option th:each="breed : ${breeds}" th:value="${breed.id}" th:text="${breed.breedName}"></option>
             </select>
         </div>
