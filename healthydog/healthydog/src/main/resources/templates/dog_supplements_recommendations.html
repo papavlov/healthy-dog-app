@@ -1,24 +1,105 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Dog Food Supplements Recommendations</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dog Supplements Recommendations for [[${dog.name}]]</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #a3daff;
+            font-family: 'Poppins', sans-serif;
+        }
+        .navbar {
+            background-color: #faf9f6;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            position: relative;
+            padding-left: 90px;
+        }
+        .navbar-brand .logo-container {
+            height: 80px;
+            width: 80px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            margin-right: 10px;
+            background-color: #faf9f6;
+            border-radius: 50%;
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .content-container {
+            margin-top: 100px;
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .content-container h2 {
+            font-weight: 600;
+            color: #333;
+        }
+        .content-container p.sub-text {
+            color: #666;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
-<h1>Food Supplements Recommendations for <span th:text="${dog.name}">Dog Name</span></h1>
 
-<div>
-    <h2>Dog Details</h2>
-    <p><strong>Breed: </strong><span th:text="${dog.breed != null ? dog.breed.breedName : 'Unknown breed'}">Breed</span></p>
-    <p><strong>Age:</strong> <span th:text="${dog.age}">Age</span></p>
-    <p><strong>Weight: </strong> <span th:text="${dog.weight}">Weight</span></p>
-    <p><strong>Breed Size: </strong><span th:text="${dog.breedSize != null ? dog.breedSize.sizeName : 'Unknown size'}">Breed Size</span></p>
-    <p><strong>Age Group: </strong><span th:text="${dog.ageGroup != null ? dog.ageGroup : 'Unknown'}">Age Group</span></p>
-    <p><strong>Owner: </strong><span th:text="${dog.user != null ? dog.user.firstName + ' ' + dog.user.lastName : 'No owner'}">Owner</span></p>
-</div>
+<nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+        <a class="navbar-brand" th:href="@{/home_page}">
+            <div class="logo-container" th:style="'background-image: url(' + @{/logo.png} + ')'">
+            </div>
+            Healthy Dog App
+        </a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/dogs/add_dog}">Add a Dog</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/dogs/list}">See Your Dogs</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ms-right">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/logout}">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
 
-<div>
-    <h2>Dog Food Supplements Recommendations</h2>
+<div class="container content-container">
+    <h2 th:text="'Dog Supplements Recommendations for ' + ${dog.name}">Dog Supplements Recommendations for Your Dog</h2>
+    <div>
+        <h3>Dog Details</h3>
+        <p><strong>Breed: </strong><span th:text="${dog.breed != null ? dog.breed.breedName : 'Unknown breed'}">Breed</span></p>
+        <p><strong>Age:</strong> <span th:text="${dog.age}">Age</span></p>
+        <p><strong>Weight: </strong> <span th:text="${dog.weight}">Weight</span></p>
+        <p><strong>Breed Size: </strong><span th:text="${dog.breedSize != null ? dog.breedSize.sizeName : 'Unknown size'}">Breed Size</span></p>
+        <p><strong>Age Group: </strong><span th:text="${dog.ageGroup != null ? dog.ageGroup : 'Unknown'}">Age Group</span></p>
+        <p><strong>Owner: </strong><span th:text="${dog.user != null ? dog.user.firstName + ' ' + dog.user.lastName : 'No owner'}">Owner</span></p>
+    </div>
     <h3>Recommended Supplements for <span th:text="${dog.name}"></span>:</h3>
+    <p class="sub-text">Based on your dog's breed size and age group, these are the dog supplements we can recommend:</p>
 
     <ul>
         <th:block th:if="${supplementRecommendations != null and !supplementRecommendations.isEmpty()}">
@@ -30,11 +111,12 @@
         </th:block>
         <p th:if="${supplementRecommendations == null or supplementRecommendations.isEmpty()}">No supplement recommendations available.</p>
     </ul>
+    <div class="mt-3">
+        <a href="/dogs/list" class="btn btn-secondary">Back to Dog List</a>
+    </div>
 </div>
 
-<div>
-    <a href="/dogs/list">Back to Dog List</a> <!-- Link to return to the dog list -->
-</div>
-
+<script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>

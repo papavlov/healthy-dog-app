@@ -61,4 +61,10 @@ public class VaccineController {
 
         return "dog_vaccines";  // Returns the Thymeleaf page
     }
+    @GetMapping("/delete/{id}")
+    public String deleteVaccine(@PathVariable Long id) {
+        // Delete vaccine and redirect to vaccine history page
+        vaccineService.deleteVaccine(id);
+        return "redirect:/dogs/{dogId}/vaccines/view";
+    }
 }

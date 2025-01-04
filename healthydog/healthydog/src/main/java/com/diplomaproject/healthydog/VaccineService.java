@@ -30,4 +30,8 @@ public class VaccineService {
     public List<Vaccine> getVaccinesForDog(Long dogId) {
         return vaccineRepository.findByDogId(dogId);
     }
+    public void deleteVaccine(Long id) {
+        vaccineRepository.deleteById(id);  // Delete the walk by ID
+    }
+
 }

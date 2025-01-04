@@ -203,7 +203,7 @@
                 <a th:href="@{/dogs/{dogId}/vaccines/add(dogId=${dog.id})}" th:text="'Log Vaccines for ' + ${dog.name}">Log Vaccines</a>
             </div>
             <div>
-                <a th:href="@{/dogs/{dogId}/vaccines/view(dogId=${dog.id})}" th:text="'See all vaccines for ' + ${dog.name}">See all vaccines</a>
+                <a th:href="@{/dogs/{dogId}/vaccines/view(dogId=${dog.id})}" th:text="'See All Vaccines for ' + ${dog.name}">See All Vaccines</a>
             </div>
             <div>
                 <a th:href="@{/api/dogfood/recommendations/{dogId}(dogId=${dog.id})}" th:text="'See Food Recommendations for ' + ${dog.name}">See Food Recommendations</a>
