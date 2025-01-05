@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -36,22 +37,27 @@ public class WebSecurityConfig {
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http.authenticationProvider(authenticationProvider())
                 .authorizeHttpRequests()
-                .requestMatchers("/css/**", "/js/**", "/images/**").permitAll() // Permits static files
+                .requestMatchers("/css/**", "/js/**", "/images/**", "/uploads/**").permitAll() // Permits static and uploaded files
                 .requestMatchers("/dogs/add_dog", "/dogs/add_dog-form", "/dogs").authenticated()
+                .requestMatchers("/dogs/{dogId}/vaccines/add", "/dogs/{dogId}/vaccines/view").authenticated()
+                .requestMatchers("/api/dogfood/recommendations/{dogId}", "/api/dogsupplements/recommendations/{dogId}", "/dogs/{dogId}/collars").authenticated()
+                .requestMatchers("/dogs/{dogId}/walks/add", "/dogs/{dogId}/walks/history", "/dogs/{dogId}/walks/history/filter").authenticated()
                 .requestMatchers("/forgot-password", "/reset-password").permitAll()
                 .anyRequest().permitAll()
                 .and()
-                //.csrf().ignoringRequestMatchers("/forgot-password", "/reset-password") // Allow CSRF for specific pages  // Ensure CSRF is enabled for safety
-                //.and()
-                .formLogin().permitAll()
-                .usernameParameter("email")
-                .defaultSuccessUrl("/home_page", true)
-                .permitAll()
-                .and()
-                .logout()
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/")
-                .permitAll();
+                .formLogin(form -> form
+                        .loginPage("/login")  // Custom login page
+                        .loginProcessingUrl("/login")  // Handles POST to /login
+                        .defaultSuccessUrl("/home_page", true)
+                        .permitAll()
+                )
+                .logout(logout -> logout
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
+                        .logoutSuccessUrl("/logout-success")
+                        .permitAll()
+                )
+                .csrf();
+                //.ignoringRequestMatchers("/forgot-password", "/reset-password"); // Disables CSRF for specific endpoints
 
         return http.build();
     }

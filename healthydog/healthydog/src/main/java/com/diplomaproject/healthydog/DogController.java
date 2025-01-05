@@ -40,6 +40,12 @@ public class DogController {
     @Autowired
     private DogImageService dogImageService;
 
+    @Autowired
+    private DogWalkController dogWalkController;
+
+    @Autowired
+    private DogWalkService dogWalkService;
+
     private static final String UPLOAD_DIR = "uploads/";
 
     // Display the Add Dog form
@@ -191,7 +197,16 @@ public class DogController {
         Dog dog = dogRepository.findById(dogId).orElse(null);
 
         if (dog != null) {
-            dogRepository.delete(dog); // Delete the dog from the repository
+            // First, delete all walks associated with the dog
+            // Call the deleteWalk method in DogWalkController for all walks of the dog
+            List<DogWalk> walks = dogWalkService.findWalksByDogId(dogId);
+            for (DogWalk walk : walks) {
+                // Call deleteWalk on each walk
+                dogWalkController.deleteWalk(walk.getId());
+            }
+
+            // Now delete the dog
+            dogRepository.delete(dog);  // Delete the dog from the repository
             redirectAttributes.addFlashAttribute("message", "Dog has been deleted successfully!");
         } else {
             redirectAttributes.addFlashAttribute("error", "Dog not found!");
@@ -199,4 +214,5 @@ public class DogController {
 
         return "redirect:/dogs/list"; // Redirect to the list of dogs after deletion
     }
+
 }

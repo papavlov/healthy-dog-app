@@ -23,6 +23,11 @@ public class ApplicationController {
     public String viewHomePage() {
         return "index";
     }
+    // Custom Login Page
+    @GetMapping("/login")
+    public String loginPage() {
+        return "login_page";
+    }
 
     // Registration
     @GetMapping("/register")
@@ -39,6 +44,11 @@ public class ApplicationController {
 
         userRepo.save(user);
         return "registration_successful";
+    }
+
+    @GetMapping("/logout-success")
+    public String logoutSuccess() {
+        return "logout";  // Return the logout.html page
     }
 
     @GetMapping("/home_page")

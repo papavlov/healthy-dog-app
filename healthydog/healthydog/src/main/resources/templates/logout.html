@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Healthy Dog App</title>
+    <title>Logged Out - Healthy Dog App</title>
     <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
@@ -12,7 +12,7 @@
             font-family: 'Poppins', sans-serif;
         }
         .navbar {
-            background-color: #faf9f6; /* Lighter creamy white */
+            background-color: #faf9f6;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             padding-top: 1rem;
             padding-bottom: 1rem;
@@ -25,7 +25,7 @@
             align-items: center;
             font-size: 1.8rem;
             position: relative;
-            padding-left: 90px; /* Add left padding to ensure space for the logo */
+            padding-left: 90px;
         }
         .navbar-brand .logo-container {
             height: 80px;
@@ -36,13 +36,13 @@
             background-color: #faf9f6;
             border-radius: 50%;
             position: absolute;
-            left: 10px; /* Set left position for the logo */
+            left: 10px;
             top: 50%;
-            transform: translateY(-50%); /* Vertically center the logo */
+            transform: translateY(-50%);
         }
-        .login-container {
+        .logout-container {
             background-color: #faf9f6;
-            padding: 5rem; /*for longer form */
+            padding: 4rem;
             border-radius: 15px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             width: 100%;
@@ -50,26 +50,24 @@
             margin: 100px auto;
             text-align: center;
         }
-        .login-container h1 {
+        .logout-container h1 {
             font-weight: 600;
-            margin-bottom: 1.5rem;
-        }
-        .btn-primary {
-            background-color: #33adff; /* button color */
-            border-color: #33adff;
-            padding: 0.5rem 1.2rem;
-            font-size: 0.9rem;
-            border-radius: 25px; /* Rounded edges */
-            width: 100%;
             margin-bottom: 1rem;
         }
-        .or-divider {
-            margin: 1rem 0;
+        .logout-container p {
+            margin-bottom: 2rem;
             font-size: 1rem;
             color: #555;
         }
-        .forgot-password {
-            margin-top: 1rem;
+        .btn-primary {
+            background-color: #33adff;
+            border-color: #33adff;
+            padding: 0.5rem 1.2rem;
+            font-size: 0.9rem;
+            border-radius: 25px;
+            width: 100%;
+            max-width: 250px;
+            margin-bottom: 10px; /*margin between buttons */
         }
     </style>
 </head>
@@ -87,12 +85,12 @@
     </div>
 </nav>
 
-<!-- Login Container -->
-<div class="login-container">
-    <h1>Welcome to the Healthy Dog App!</h1>
-    <a class="btn btn-primary" th:href="@{/login}">Log In</a>
-    <div class="or-divider">------ or ------</div>
-    <a class="btn btn-primary" th:href="@{/register}">Register</a>
+<!-- Logout Container -->
+<div class="logout-container">
+    <h1>You Have Been Logged Out</h1>
+    <p>Thank you for using the Healthy Dog App!</p>
+    <a class="btn btn-primary" th:href="@{/login}">Log In Again</a>
+    <a class="btn btn-primary" th:href="@{/}">Go to Home Page</a>
 </div>
 
 <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
