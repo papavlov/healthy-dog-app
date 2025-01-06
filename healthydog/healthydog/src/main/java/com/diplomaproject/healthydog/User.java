@@ -26,6 +26,8 @@ public class User {
 
     private String resetToken;
 
+
+
     @Column(name = "token_expiry_time")
     private LocalDateTime tokenExpiryTime;
 

@@ -1,5 +1,6 @@
 package com.diplomaproject.healthydog;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,13 +16,13 @@ public class DogCollarService {
         this.collarRepository = collarRepository;
     }
 
+    @Transactional
     public List<DogCollar> getRecommendedCollars(BreedSize breedSize) {
-        List<DogCollar> collars = collarRepository.findByBreedSize(breedSize);
-        System.out.println("Collars for breed size " + breedSize + ": " + collars);//test print to check if app fetches the correct collars for specific breed
+        // Fetch both DogCollar and BreedSize in one query
+        List<DogCollar> collars = collarRepository.findByBreedSizeWithBreed(breedSize);
+        System.out.println("Collars for breed size " + breedSize + ": " + collars);
         return collars;
     }
-
-
 }
 
 

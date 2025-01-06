@@ -57,4 +57,5 @@ public class EmailService {
             throw new RuntimeException("Failed to send email: " + e.getMessage());
         }
     }
+
 }

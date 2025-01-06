@@ -12,7 +12,7 @@ public class DogCollar {
 
     private String collarName;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "breed_size_id", nullable = false)  // Foreign key to BreedSize
     private BreedSize breedSize;
 
