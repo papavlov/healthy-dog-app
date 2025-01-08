@@ -132,10 +132,11 @@ public class Dog {
     @PrePersist
     @PreUpdate
     public void assignAgeGroup() {
-        if (this.ageGroup == null && this.age != null) {
+        if (this.age != null) {
             this.ageGroup = determineAgeGroup(this.age);
         }
     }
+
 
 
     private String determineAgeGroup(Integer age) {

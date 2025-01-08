@@ -191,6 +191,70 @@ public class DogController {
         return "dog_detail"; // Return the dog_detail.html view
     }
 
+    @GetMapping("/edit/{id}")
+    public String editDogForm(@PathVariable Long id, Model model) {
+        Dog dog = dogService.findById(id);
+        if (dog == null) {
+            model.addAttribute("error", "Dog not found.");
+            return "redirect:/dogs/list";
+        }
+        List<BreedsDataEntity> breeds = breedsRepository.findAll();
+        model.addAttribute("breeds", breeds);
+        model.addAttribute("dog", dog);
+        return "edit_dog";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String editDog(@PathVariable Long id,
+                          @ModelAttribute("dog") Dog updatedDog,
+                          @RequestParam("dogImage") MultipartFile file,
+                          @RequestParam(value = "resetImage", required = false) boolean resetImage,
+                          RedirectAttributes redirectAttributes) {
+        Dog existingDog = dogService.findById(id);
+        if (existingDog == null) {
+            redirectAttributes.addFlashAttribute("error", "Dog not found.");
+            return "redirect:/dogs/list";
+        }
+
+        // Update basic dog details
+        existingDog.setName(updatedDog.getName());
+        existingDog.setBreed(updatedDog.getBreed());
+        existingDog.setWeight(updatedDog.getWeight());
+        existingDog.setAge(updatedDog.getAge());
+        existingDog.assignAgeGroup();
+
+        // Set the breed size (same logic as in addDog)
+        BreedsDataEntity selectedBreed = breedsRepository.findById(updatedDog.getBreed().getId())
+                .orElseThrow(() -> new IllegalArgumentException("Breed not found"));
+        existingDog.setBreedSize(selectedBreed.getBreedSize());
+
+        // Handle image upload if a new image is provided
+
+        if (resetImage) {
+            existingDog.setImageUrl("/default-dog-image.jpg");  // Reset to default image
+        } else if (file != null && !file.isEmpty()) {
+            try {
+                String fileName = saveResizedImage(file);
+                existingDog.setImageUrl("uploads/" + fileName);  // Update with new image
+            } catch (IOException e) {
+                redirectAttributes.addFlashAttribute("error", "Failed to update the image.");
+                return "redirect:/dogs/list";
+            }
+        }
+
+        // Save the updated dog
+        dogService.saveDog(existingDog);
+
+        // Redirect with success message
+        redirectAttributes.addFlashAttribute("message", "Dog updated successfully.");
+        return "redirect:/dogs/list";
+    }
+
+
+
+
+
+
     // Delete a dog by ID
     @GetMapping("/delete/{dogId}")
     public String deleteDog(@PathVariable Long dogId, RedirectAttributes redirectAttributes) {

@@ -1,4 +1,5 @@
 package com.diplomaproject.healthydog;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +43,8 @@ public class DogService {
         dog.setUser(user);  // Associate the dog with the user
         return dogRepository.save(dog);  // Save the dog
     }
+
+
 
     public void saveDog(Dog dog) {
         if (dog.getBreedSize() != null) {

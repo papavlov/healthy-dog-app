@@ -180,14 +180,6 @@
                  th:style="'background-image: url(' + @{${dog.imageUrl != null && !dog.imageUrl.isEmpty() ? '/' + dog.imageUrl : '/default-dog-image.jpg'}} + ')'">
             </div>
 
-            <!-- Change Image Button Form -->
-            <div class="form-container">
-                <form th:action="@{/dogs/{id}/changeImage(id=${dog.id})}" method="post" enctype="multipart/form-data">
-                    <input type="file" name="image" />
-                    <button type="submit">Change Image</button>
-                </form>
-            </div>
-
             <!-- Dog Details Section -->
             <h3>Dog Details</h3>
             <p><strong>Dog Name: </strong><span th:text="${dog.name}">Dog Name</span></p>
@@ -219,6 +211,9 @@
             </div>
             <div>
                 <a th:href="@{/dogs/{dogId}/walks/history(dogId=${dog.id})}" th:text="'View Walk History for ' + ${dog.name}">View Walk History</a>
+            </div>
+            <div>
+                <a th:href="@{/dogs/edit/{Id}(Id=${dog.id})}" th:text="'Edit information for ' + ${dog.name}">Edit Dog</a>
             </div>
             <div>
                 <a th:href="@{/dogs/delete/{dogId}(dogId=${dog.id})}" onclick="return confirm('Are you sure you want to delete this dog?');">Delete Dog</a>
