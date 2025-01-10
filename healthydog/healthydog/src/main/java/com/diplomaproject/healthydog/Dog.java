@@ -1,6 +1,9 @@
 package com.diplomaproject.healthydog;
 
 import jakarta.persistence.*;
+
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +26,10 @@ public class Dog {
     @JoinColumn(name = "breed_size_id", referencedColumnName = "id")
     private BreedSize breedSize;
 
-    @Column(name = "age", nullable = false)
+    @Column(name = "birthday")
+    private LocalDate birthday;
+
+    @Column // Indicates this field is not persisted in the database
     private Integer age;
 
     @Column(name = "age_group")
@@ -76,13 +82,19 @@ public class Dog {
         this.breed = breed;
     }
 
+    public LocalDate getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
+        updateAgeAndAgeGroup(); // Update age and age group whenever the birthday is set
+    }
+
     public Integer getAge() {
         return age;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
-    }
 
     public Float getWeight() {
         return weight;
@@ -131,12 +143,12 @@ public class Dog {
     // Method to determine the ageGroup of a dog
     @PrePersist
     @PreUpdate
-    public void assignAgeGroup() {
-        if (this.age != null) {
+    public void updateAgeAndAgeGroup() {
+        if (birthday != null) {
+            this.age = Period.between(birthday, LocalDate.now()).getYears();
             this.ageGroup = determineAgeGroup(this.age);
         }
     }
-
 
 
     private String determineAgeGroup(Integer age) {

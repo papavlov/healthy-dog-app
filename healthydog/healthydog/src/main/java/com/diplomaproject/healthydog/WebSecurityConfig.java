@@ -42,6 +42,7 @@ public class WebSecurityConfig {
                 .requestMatchers("/dogs/{dogId}/vaccines/add", "/dogs/{dogId}/vaccines/view").authenticated()
                 .requestMatchers("/api/dogfood/recommendations/{dogId}", "/api/dogsupplements/recommendations/{dogId}", "/dogs/{dogId}/collars").authenticated()
                 .requestMatchers("/dogs/{dogId}/walks/add", "/dogs/{dogId}/walks/history", "/dogs/{dogId}/walks/history/filter").authenticated()
+                .requestMatchers("/dogs//edit/{dogId}").authenticated()
                 .requestMatchers("/forgot-password", "/reset-password").permitAll()
                 .anyRequest().permitAll()
                 .and()

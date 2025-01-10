@@ -55,7 +55,7 @@ public class DogController {
             return "redirect:/login"; // Redirect if not authenticated
         }
 
-        List<BreedsDataEntity> breeds = breedsRepository.findAll(); // Fetch all breeds
+        List<BreedsDataEntity> breeds = dogService.getAllBreeds(); //fetch all breeds sorted
         System.out.println("Breeds count: " + breeds.size());  //test print to verify breeds number
 
         model.addAttribute("breeds", breeds); // Add breeds to the model
@@ -87,7 +87,7 @@ public class DogController {
             dog.setBreedSize(selectedBreed.getBreedSize());
 
             // Assign the appropriate age group based on dog’s age
-            dog.assignAgeGroup();
+            dog.updateAgeAndAgeGroup();
 
             // Handle image upload (if file is provided)
             if (!file.isEmpty()) {
@@ -198,7 +198,7 @@ public class DogController {
             model.addAttribute("error", "Dog not found.");
             return "redirect:/dogs/list";
         }
-        List<BreedsDataEntity> breeds = breedsRepository.findAll();
+        List<BreedsDataEntity> breeds = dogService.getAllBreeds(); //fetch all breeds sorted
         model.addAttribute("breeds", breeds);
         model.addAttribute("dog", dog);
         return "edit_dog";
@@ -220,8 +220,12 @@ public class DogController {
         existingDog.setName(updatedDog.getName());
         existingDog.setBreed(updatedDog.getBreed());
         existingDog.setWeight(updatedDog.getWeight());
-        existingDog.setAge(updatedDog.getAge());
-        existingDog.assignAgeGroup();
+        //existingDog.setAge(updatedDog.getAge());
+        //existingDog.assignAgeGroup();
+        if (updatedDog.getBirthday() != null) {
+            existingDog.setBirthday(updatedDog.getBirthday()); // Set to the updated birthday
+        }
+        existingDog.updateAgeAndAgeGroup(); // Ensure age and age group are updated
 
         // Set the breed size (same logic as in addDog)
         BreedsDataEntity selectedBreed = breedsRepository.findById(updatedDog.getBreed().getId())

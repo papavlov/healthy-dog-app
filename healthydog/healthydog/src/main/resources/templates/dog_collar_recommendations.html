@@ -93,7 +93,10 @@
     <div>
         <h3>Dog Details</h3>
         <p><strong>Breed: </strong><span th:text="${dog.breed != null ? dog.breed.breedName : 'Unknown breed'}">Breed</span></p>
-        <p><strong>Age:</strong> <span th:text="${dog.age}">Age</span></p>
+        <p><strong>Age:</strong>
+            <span th:text="${dog.age < 1 ? '<1' : dog.age}"></span>
+        </p>
+        <p><strong>Birthday: </strong> <span th:text="${dog.birthday}">Birthday</span></p>
         <p><strong>Weight: </strong> <span th:text="${dog.weight}">Weight</span></p>
         <p><strong>Breed Size: </strong><span th:text="${dog.breedSize != null ? dog.breedSize.sizeName : 'Unknown size'}">Breed Size</span></p>
         <p><strong>Age Group: </strong><span th:text="${dog.ageGroup != null ? dog.ageGroup : 'Unknown'}">Age Group</span></p>

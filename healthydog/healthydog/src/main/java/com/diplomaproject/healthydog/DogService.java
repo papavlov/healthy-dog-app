@@ -3,6 +3,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 @Service
 public class DogService {
@@ -20,7 +21,9 @@ public class DogService {
     private BreedSizeRepository breedSizeRepository;
 
     public List<BreedsDataEntity> getAllBreeds() {
-        return breedsRepository.findAll();
+        List<BreedsDataEntity> breeds = breedsRepository.findAll();
+        breeds.sort(Comparator.comparing(BreedsDataEntity::getBreedName)); // Sort breeds by name
+        return breeds;
     }
 
     // Find dogs by user
@@ -33,7 +36,7 @@ public class DogService {
         Dog dog = dogRepository.findById(dogId).orElse(null);
         if (dog != null) {
             // Ensure the ageGroup is set correctly when retrieving the dog
-            dog.assignAgeGroup();  // Trigger the method manually
+            dog.updateAgeAndAgeGroup();  // Trigger the method manually
         }
         return dog;
     }

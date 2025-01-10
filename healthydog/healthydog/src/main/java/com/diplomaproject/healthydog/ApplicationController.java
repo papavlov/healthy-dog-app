@@ -66,10 +66,10 @@ public class ApplicationController {
     public String processForgotPassword(@RequestParam("email") String email) {
         boolean result = passwordResetService.sendPasswordResetEmail(email);
         if (result) {
-            // Redirect to Spring Security's default login page, ensuring it's not treated as a custom page
+            //Redirect to Spring Security default login page
             return "redirect:/login";
         } else {
-            // Redirect back to the forgot-password page with an error message
+            //Redirect back to the forgot-password page with an error message
             return "redirect:/forgot-password?error=email-not-found";
         }
     }
