@@ -35,7 +35,8 @@ public class DogCollarReminderScheduler {
 
     //@Scheduled(cron = "0 0 0 1 3-10 *") //Scheduled to run on the 1st of March to October at midnight
     //@Scheduled(cron = "0 * * * * *") //every minute - for testing
-    @Scheduled(cron = "0 0 0 * * *") // Run every day at midnight
+    //@Scheduled(cron = "0 0 0 * * *") // Run every day at midnight
+    @Scheduled(cron = "0 0 0 * 10,11,12,1,2 *") // Run daily from October to February at midnight
     @Transactional
     public void sendMonthlyCollarReminders() {
         List<User> users = userService.findAllUsers();  // Fetch all users

@@ -29,7 +29,7 @@ public class Dog {
     @Column(name = "birthday")
     private LocalDate birthday;
 
-    @Column // Indicates this field is not persisted in the database
+    @Column
     private Integer age;
 
     @Column(name = "age_group")
@@ -39,7 +39,7 @@ public class Dog {
     private Float weight;
 
     @ManyToOne
-    @JoinColumn(name = "user_id") // This is the foreign key column
+    @JoinColumn(name = "user_id") //foreign key column
     private User user;
 
     // One-to-many relationship with the Vaccine entity
@@ -132,15 +132,15 @@ public class Dog {
 
     public void addVaccine(Vaccine vaccine) {
         vaccines.add(vaccine);
-        vaccine.setDog(this);  // Set the dog's reference in the vaccine
+        vaccine.setDog(this);  // Set the dog reference in the vaccine
     }
 
     public void removeVaccine(Vaccine vaccine) {
         vaccines.remove(vaccine);
-        vaccine.setDog(null);  // Remove the dog's reference in the vaccine
+        vaccine.setDog(null);  // Remove the dog reference in the vaccine
     }
 
-    // Method to determine the ageGroup of a dog
+    //мethod to determine the ageGroup of a dog
     @PrePersist
     @PreUpdate
     public void updateAgeAndAgeGroup() {

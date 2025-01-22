@@ -10,7 +10,6 @@ public class BreedsDataInitializer implements CommandLineRunner {
     @Autowired
     private BreedsService breedsService;
 
-    // Specify the file path for the breeds CSV file (can be hardcoded or passed through properties)
     @Override
     public void run(String... args) throws Exception {
         // Specify the path to the CSV file

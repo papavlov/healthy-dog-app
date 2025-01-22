@@ -11,15 +11,16 @@ import java.util.stream.Collectors;
 public class DogCollarReminderService {
 
     public String getCollarReminder(Dog dog, String collarNames) {
-        // Check if the current month falls within the anti-parasite collar season (March to October)
+        //checking if the current month is off-season (oct-feb)
         Month currentMonth = LocalDate.now().getMonth();
-        boolean isCollarSeason = currentMonth.getValue() >= Month.MARCH.getValue() && currentMonth.getValue() <= Month.OCTOBER.getValue();
+        boolean isOffSeason = currentMonth.getValue() >= Month.OCTOBER.getValue() || currentMonth.getValue() <= Month.FEBRUARY.getValue();
 
-        if (isCollarSeason) {
-            return "It is anti-parasite collar season (March to October). We recommend using the following collars for your dog's protection: "
-                    + collarNames + ". Please consult your veterinarian for further details.";
+        if (isOffSeason) {
+            return "The anti-parasite collar season (March to October) is currently inactive. This is the perfect time to prepare. "
+                    + "We recommend the following collars for your dog's protection: " + collarNames + ". Please consult your veterinarian for further details.";
         } else {
-            return "Anti-parasite collars are typically needed between March and October. Please check again closer to the season.";
+            return "Anti-parasite collar season is currently active (March to October). Please ensure your dog is protected.";
         }
     }
+
 }

@@ -31,7 +31,7 @@ public class DogImageService {
         Files.copy(file.getInputStream(), filePath);
 
         // Return the relative URL to the file
-        return "/uploads/" + fileName;  // This URL should work after moving the folder
+        return "/uploads/" + fileName;
     }
 }
 

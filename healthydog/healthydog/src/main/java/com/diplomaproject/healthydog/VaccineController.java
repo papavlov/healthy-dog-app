@@ -37,16 +37,16 @@ public class VaccineController {
     // Submit vaccine form and redirect to dog list page
     @PostMapping
     public String logVaccine(@PathVariable Long dogId,
-                             @RequestParam VaccineName vaccineName,  // Enum instead of String
+                             @RequestParam VaccineName vaccineName,
                              @RequestParam LocalDate vaccinationDate) {
-        // Call the addVaccine method from VaccineService
+        //call the addVaccine method from VaccineService
         vaccineService.addVaccine(dogId, vaccineName, vaccinationDate);
 
         // Redirect to the dog list page after saving the vaccine
         return "redirect:/dogs/list";
     }
 
-    // View vaccines page (for Thymeleaf)
+    // View vaccines page
     @GetMapping("/view")
     public String viewVaccines(@PathVariable Long dogId, Model model) {
         List<Vaccine> vaccines = vaccineService.getVaccinesForDog(dogId);
@@ -59,7 +59,7 @@ public class VaccineController {
         model.addAttribute("vaccines", vaccines);
         model.addAttribute("vaccineReminder", vaccineReminder);  // Add the reminder to the model
 
-        return "dog_vaccines";  // Returns the Thymeleaf page
+        return "dog_vaccines";  // Returns the page
     }
     @GetMapping("/delete/{id}")
     public String deleteVaccine(@PathVariable Long id) {

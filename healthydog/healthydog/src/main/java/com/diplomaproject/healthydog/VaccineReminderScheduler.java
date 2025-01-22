@@ -26,23 +26,23 @@ public class VaccineReminderScheduler {
     @Autowired
     private DogService dogService;
 
-    // Scheduled to run once a day at midnight
+
     @Scheduled(cron = "0 0 0 * * *") // Run every day at midnight
     //@Scheduled(cron = "0 * * * * *")//every minute - for testing
     public void sendDailyVaccineReminders() {
-        List<User> users = userService.findAllUsers();  // Fetch all users
+        List<User> users = userService.findAllUsers();  // fetch all users
         for (User user : users) {
-            List<Dog> dogs = dogService.findByUser(user);  // Fetch all dogs for each user
+            List<Dog> dogs = dogService.findByUser(user);  // fetch all dogs for each user
             for (Dog dog : dogs) {
-                // Get the vaccine reminder message for the dog using VaccineReminderService
+                //get the vaccine reminder message for the dog using VaccineReminderService
                 String reminderMessage = vaccineReminderService.getVaccineReminder(dog);
                 if (reminderMessage != null) {
-                    // Send the reminder via email to the user
+                    //send the reminder via email to the user
                     String emailSubject = "Vaccine Reminder for " + dog.getName();
                     try {
                         emailService.sendEmail(user.getEmail(), emailSubject, reminderMessage);  // Handle any exception
                     } catch (Exception e) {
-                        // Log the error (using SLF4J instead of System.err)
+                        // Log the error (using SLF4J)
                         logger.error("Failed to send email to {} for dog {}: {}", user.getEmail(), dog.getName(), e.getMessage());
                     }
                 }

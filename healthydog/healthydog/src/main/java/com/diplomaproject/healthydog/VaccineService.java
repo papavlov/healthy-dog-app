@@ -20,7 +20,7 @@ public class VaccineService {
                 .orElseThrow(() -> new RuntimeException("Dog not found"));
 
         Vaccine vaccine = new Vaccine();
-        vaccine.setVaccineName(vaccineName);  // Use enum instead of string
+        vaccine.setVaccineName(vaccineName);
         vaccine.setVaccinationDate(vaccinationDate);
         vaccine.setDog(dog);
 

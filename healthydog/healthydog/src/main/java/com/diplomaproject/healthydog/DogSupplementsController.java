@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller  // Use @Controller to render HTML views
+@Controller
 @RequestMapping("/api/dogsupplements")
 public class DogSupplementsController {
 

@@ -70,7 +70,7 @@ public class BreedsService {
         BreedSize large = breedSizeRepository.findBySizeName("LARGE");
 
         if (breedName == null || breedName.isEmpty()) {
-            return medium; // Default to medium or handle as needed
+            return medium; // Default to medium
         }
 
         // Define mappings using the objects fetched from the database

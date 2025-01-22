@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller  // Changed from @RestController to @Controller to render HTML views
+@Controller
 @RequestMapping("/api/dogfood")
 public class DogFoodController {
 

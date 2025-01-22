@@ -12,7 +12,7 @@ public class DogService {
     private DogRepository dogRepository;
 
     @Autowired
-    private UserRepository userRepository;  // Assuming you have a User repository
+    private UserRepository userRepository;
 
     @Autowired
     private BreedsRepository breedsRepository;

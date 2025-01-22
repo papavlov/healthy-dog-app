@@ -18,7 +18,7 @@ public class DogFood {
     @ManyToOne(cascade = CascadeType.PERSIST) //Ensure BreedSize is saved if new
     private BreedSize breedSize;    //Relationship with BreedSize entity
 
-    private String ageGroup;        //alternative - enum
+    private String ageGroup;
 
     private String description;     //Additional info about the food
 

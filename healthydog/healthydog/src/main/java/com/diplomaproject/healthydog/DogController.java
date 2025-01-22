@@ -86,10 +86,10 @@ public class DogController {
                     .orElseThrow(() -> new IllegalArgumentException("Breed not found"));
             dog.setBreedSize(selectedBreed.getBreedSize());
 
-            // Assign the appropriate age group based on dog’s age
+            // Assign the appropriate age group based on dogs age
             dog.updateAgeAndAgeGroup();
 
-            // Handle image upload (if file is provided)
+            //handle image upload (if file is provided)
             if (!file.isEmpty()) {
                 // Resize and save the image
                 String fileName = saveResizedImage(file);
@@ -110,7 +110,7 @@ public class DogController {
 
     // Method to resize the uploaded image and save it
     private String saveResizedImage(MultipartFile image) throws IOException {
-        // Ensure the file has a unique name
+        //file has a unique name
         String fileName = UUID.randomUUID().toString() + "_" + image.getOriginalFilename();
         Path uploadPath = Paths.get(UPLOAD_DIR);
 
@@ -118,7 +118,7 @@ public class DogController {
             Files.createDirectories(uploadPath);  // Create the uploads directory if it doesnt exist
         }
 
-        // Create the final file path
+        // Create the final filepath
         Path targetLocation = uploadPath.resolve(fileName);
 
         // Resize the image to a fixed size (300x300)
@@ -132,17 +132,17 @@ public class DogController {
     // For changing dog image
     @PostMapping("/{id}/changeImage")
     public String changeImage(@PathVariable("id") Long dogId, @RequestParam("image") MultipartFile image) {
-        // Handle the file upload and update the dog's image URL
+        // Handle the file upload and update the dog image URL
         try {
             String imageName = saveResizedImage(image);
 
-            // Update the dog's record in the database
+            // Update the dog record in the database
             Dog dog = dogService.findById(dogId);
             dog.setImageUrl("uploads/" + imageName);
             dogService.saveDog(dog);
         } catch (IOException e) {
             e.printStackTrace();
-            // Handle error properly (e.g., show a message to the user)
+            // Handle error
         }
 
         return "redirect:/dogs/list"; // Redirect back to the dog list
@@ -155,7 +155,7 @@ public class DogController {
             return "redirect:/login"; // Redirect if not authenticated
         }
 
-        String username = authentication.getName(); // Get logged-in user's username
+        String username = authentication.getName(); // Get logged-in user username
         User user = userService.findByEmail(username); // Fetch user by email
 
         if (user == null) {
@@ -173,7 +173,7 @@ public class DogController {
         }
 
         dogs.sort(Comparator.comparing(Dog::getId));
-        // Add the list of dogs (with vaccines) to the model
+        // Add the list of dogs with vaccines to the model
         model.addAttribute("dogs", dogs);
 
         return "dog_list"; // Return the dog_list.html view
@@ -265,16 +265,16 @@ public class DogController {
         Dog dog = dogRepository.findById(dogId).orElse(null);
 
         if (dog != null) {
-            // First, delete all walks associated with the dog
+            //delete all walks associated with the dog
             // Call the deleteWalk method in DogWalkController for all walks of the dog
             List<DogWalk> walks = dogWalkService.findWalksByDogId(dogId);
             for (DogWalk walk : walks) {
-                // Call deleteWalk on each walk
+                //call deleteWalk on each walk
                 dogWalkController.deleteWalk(walk.getId());
             }
 
-            // Now delete the dog
-            dogRepository.delete(dog);  // Delete the dog from the repository
+            //delete the dog
+            dogRepository.delete(dog);
             redirectAttributes.addFlashAttribute("message", "Dog has been deleted successfully!");
         } else {
             redirectAttributes.addFlashAttribute("error", "Dog not found!");

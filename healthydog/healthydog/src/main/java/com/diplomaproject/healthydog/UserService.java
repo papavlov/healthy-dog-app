@@ -32,7 +32,7 @@ public class UserService {
 
     // Save a new user (register)
     public User saveUser(User user) {
-        // Remove password encoding here since it's already encoded in the resetPassword method
+
         return userRepository.save(user);
     }
 
@@ -44,7 +44,7 @@ public class UserService {
         user.setEmail(userDetails.getEmail());
         user.setFirstName(userDetails.getFirstName());
         user.setLastName(userDetails.getLastName());
-        // Update password only if it's provided
+        // Update password only if its provided
         if (userDetails.getPassword() != null && !userDetails.getPassword().isEmpty()) {
             user.setPassword(passwordEncoder.encode(userDetails.getPassword()));
         }
@@ -56,7 +56,7 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    // Find a user by email for authentication purposes
+    //find a user by email for authentication purposes
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
     }

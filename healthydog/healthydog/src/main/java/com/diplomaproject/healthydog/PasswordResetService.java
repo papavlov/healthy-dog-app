@@ -17,19 +17,19 @@ public class PasswordResetService {
     private JavaMailSender mailSender;
 
     @Autowired
-    private UserService userService;  // Use UserService to find user by email
+    private UserService userService;
 
-    @Value("${app.resetPasswordUrl}")  // Define your reset URL in application.properties
+    @Value("${app.resetPasswordUrl}")
     private String resetPasswordUrl;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
     public boolean sendPasswordResetEmail(String email) {
-        User user = userService.findByEmail(email);  // Directly get User (may be null)
+        User user = userService.findByEmail(email);
 
         if (user != null) {
-            // Generate a reset token (UUID or a different method)
+            // Generate a reset token
             String token = UUID.randomUUID().toString();
 
             // Set token and expiry time for validation
@@ -55,26 +55,26 @@ public class PasswordResetService {
 
     public boolean resetPassword(String token, String newPassword) {
         // Validate token by checking if a user exists with the token
-        User user = isValidToken(token);  // Directly reuse isValidToken
+        User user = isValidToken(token);
 
         if (user != null) {
             // Hash the new password
             String encodedPassword = passwordEncoder.encode(newPassword);
 
-            // Log the new password encoding (optional, for debugging purposes)
+            // Log the new password encoding
             System.out.println("Encoded password: " + encodedPassword);
 
-            // Update the user's password with the new encoded password
+            // Update the user password with the new encoded password
             user.setPassword(encodedPassword);
 
-            // Clear the reset token after resetting the password
+            // clear the reset token after resetting the password
             user.setResetToken(null);
             user.setTokenExpiryTime(null);
 
             // Save the updated user
             userService.saveUser(user);
 
-            // Log the success of the operation
+            // Log the success
             System.out.println("Password reset successfully for user: " + user.getEmail());
 
             return true;  // Password successfully reset

@@ -15,7 +15,7 @@ public class DogSupplements {
     @ManyToOne(cascade = CascadeType.PERSIST) // Relationship with BreedSize entity
     private BreedSize breedSize;    // Relationship with BreedSize entity
 
-    private String ageGroup;        // Age group as a string (e.g., PUPPY, ADULT, SENIOR)
+    private String ageGroup;
 
     private String description;     // Additional info about the supplement
 

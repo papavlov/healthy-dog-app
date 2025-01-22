@@ -68,9 +68,9 @@ public class WebSecurityConfig {
     public static class WebMvcConfig implements WebMvcConfigurer {
         @Override
         public void addResourceHandlers(ResourceHandlerRegistry registry) {
-            // This maps the 'uploads' folder in the root directory to be accessible via /uploads/**
+            //This maps the uploads folder in the root directory to be accessible via /uploads/**
             registry.addResourceHandler("/uploads/**")
-                    .addResourceLocations("file:uploads/");  // Specifies that 'uploads' folder is under the project root
+                    .addResourceLocations("file:uploads/");  //specifies that uploads folder is under the project root
         }
     }
 }
