@@ -1,2 +1,6 @@
 # healthy-dog-app
 Diploma project
+
+Tech stack - Java, Spring Boot framework, Spring Security, Spring Data JPA, Hibernate, PostgreSQL, HTML, CSS, Thymeleaf, Google SMTP integration for email reminders (with Spring Scheduler and Java Mail Sender). Standard MVC (Model, View, Controller) app architecture.
+The application is a useful, all-in one solution for dog owners for tracking their dog's health
+Main functionalities include: Registration and login for users; registration of a new dog by a user; list of all dogs for a user, option to edit or delete a dog profile of already registered dogs by a user. For each registered dog the user can: track their dog's vaccinations - log vaccinations and receive in-app and email reminders for upcoming vaccinations; the users receive food, food supplements and anti-parasite collars recommendations for their dogs - all recommendations are unique and determined by the dog's breed and age. The application also sends scheduled email reminders for the anti-parasite collars to the users; users can also track their dog's walks, filter them by date and see how close to the "Move Goal" for the specific date their dog is - the app sets activities/excercising goal for each dog, depending on the dog's age and breed;
